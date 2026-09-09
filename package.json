@@ -1,0 +1,30 @@
+{
+  "name": "english-teacher-agent",
+  "version": "0.1.0",
+  "private": true,
+  "packageManager": "pnpm@11.19.0",
+  "engines": {
+    "node": ">=24 <25",
+    "pnpm": ">=11 <12"
+  },
+  "scripts": {
+    "dev": "pnpm --parallel --filter @english-teacher/web --filter @english-teacher/worker dev",
+    "lint": "eslint . --max-warnings 0",
+    "typecheck": "pnpm -r --if-present typecheck",
+    "test": "vitest run --passWithNoTests",
+    "build": "pnpm -r --if-present build",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
+  },
+  "devDependencies": {
+    "@types/node": "26.5.0",
+    "@types/react": "19.2.18",
+    "@types/react-dom": "19.2.7",
+    "eslint": "9.39.4",
+    "eslint-config-next": "16.3.4",
+    "prettier": "3.9.6",
+    "tsx": "4.23.13",
+    "typescript": "6.0.3",
+    "vitest": "5.0.0"
+  }
+}
