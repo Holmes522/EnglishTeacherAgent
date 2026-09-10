@@ -1,5 +1,7 @@
 import { z } from "zod";
 
+import { learningResultSchema, publicErrorSchema } from "./results.js";
+
 const unicodeTextSchema = z
   .string()
   .min(1)
@@ -44,6 +46,8 @@ export const learningItemSchema = z.object({
   detectedKind: inputKindSchema,
   detectedLanguage: z.string().min(2).max(35).optional(),
   status: z.enum(["PENDING", "RUNNING", "SUCCEEDED", "FAILED", "CANCELLED"]),
+  result: learningResultSchema.optional(),
+  error: publicErrorSchema.optional(),
 });
 
 export const learningRunSchema = z
@@ -85,4 +89,3 @@ export const learningRunSchema = z
 export type CreateLearningRunInput = z.infer<typeof createLearningRunInputSchema>;
 export type LearningItem = z.infer<typeof learningItemSchema>;
 export type LearningRun = z.infer<typeof learningRunSchema>;
-
