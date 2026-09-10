@@ -38,6 +38,12 @@ importers:
 
   apps/web:
     dependencies:
+      '@english-teacher/contracts':
+        specifier: workspace:*
+        version: link:../../packages/contracts
+      '@english-teacher/speech':
+        specifier: workspace:*
+        version: link:../../packages/speech
       next:
         specifier: 16.3.4
         version: 16.3.4(@babel/core@7.29.7(supports-color@7.1.0))(@types/node@26.5.0)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
