@@ -7,7 +7,9 @@ export {
 } from "./learningRun.js";
 export type {
   CreateLearningRunInput,
+  InputKind,
   LearningItem,
+  LearningIntent,
   LearningRun,
 } from "./learningRun.js";
 export {

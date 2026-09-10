@@ -87,5 +87,7 @@ export const learningRunSchema = z
   });
 
 export type CreateLearningRunInput = z.infer<typeof createLearningRunInputSchema>;
+export type InputKind = z.infer<typeof inputKindSchema>;
+export type LearningIntent = z.infer<typeof learningIntentSchema>;
 export type LearningItem = z.infer<typeof learningItemSchema>;
 export type LearningRun = z.infer<typeof learningRunSchema>;
