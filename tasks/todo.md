@@ -59,9 +59,9 @@
 
 **验收标准：**
 
-- [ ] Node.js/Next.js/依赖准确版本和 lockfile 已提交。
-- [ ] strict TypeScript、格式化和环境变量 schema 生效。
-- [ ] README 中所有计划命令可执行。
+- [x] Node.js/Next.js/依赖准确版本和 lockfile 已提交。
+- [x] strict TypeScript、格式化和环境变量 schema 生效。
+- [x] README 中所有计划命令可执行。
 
 **验证：** `pnpm lint && pnpm typecheck && pnpm test && pnpm build`。
 
@@ -75,9 +75,9 @@
 
 **验收标准：**
 
-- [ ] JSON Schema、TypeScript 类型和 OpenAPI 从同一来源生成。
-- [ ] 所有 union 有判别字段和 schemaVersion。
-- [ ] Unicode range、分数范围和批量上限有测试。
+- [x] JSON Schema、TypeScript 类型和 OpenAPI 从同一来源生成。
+- [x] 所有 union 有判别字段和 schemaVersion。
+- [x] Unicode range、分数范围和批量上限有测试。
 
 **验证：** `pnpm test --filter contracts`，生成文件无未提交差异。
 
@@ -130,9 +130,9 @@
 
 **验收标准：**
 
-- [ ] 支持换行、编号、项目符号、引号和中英混合。
-- [ ] 20 项/5000 字符上限不静默截断。
-- [ ] 原文、规范化文本和顺序全部保留。
+- [x] 支持换行、编号、项目符号、引号和中英混合。
+- [x] 20 项/5000 字符上限不静默截断。
+- [x] 原文、规范化文本和顺序全部保留。
 
 **验证：** 单元 + 属性测试，覆盖 `tests/golden` 的 30 个解析案例。
 
@@ -319,4 +319,3 @@
 **依赖：** 核心 UI/设计令牌稳定
 
 **预计范围：** 立项时拆为清单、权限、运行时、开发者工具多个 M 任务
-
