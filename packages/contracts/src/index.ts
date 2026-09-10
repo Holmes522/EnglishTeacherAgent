@@ -19,6 +19,7 @@ export {
   speakableContentSchema,
   wordAnalysisSchema,
 } from "./results.js";
+export { createJsonSchemas, createOpenApiDocument } from "./generatedContracts.js";
 export type {
   CapabilityManifest,
   LearningResult,

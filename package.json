@@ -11,7 +11,7 @@
     "dev": "pnpm --parallel --filter @english-teacher/web --filter @english-teacher/worker dev",
     "lint": "eslint . --max-warnings 0",
     "typecheck": "pnpm -r --if-present typecheck",
-    "test": "vitest run --passWithNoTests",
+    "test": "vitest run --passWithNoTests && pnpm --filter @english-teacher/contracts check:generated",
     "build": "pnpm -r --if-present build",
     "format": "prettier --write .",
     "format:check": "prettier --check ."

@@ -1,0 +1,2636 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "English Teacher AI Agent API",
+    "version": "0.1.0"
+  },
+  "paths": {
+    "/api/v1/learning-runs": {
+      "post": {
+        "summary": "Create a single or batch learning run",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateLearningRunInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "202": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LearningRun"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PublicError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/capabilities": {
+      "get": {
+        "summary": "Discover enabled product capabilities",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CapabilityManifest"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "CreateLearningRunInput": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "object",
+        "properties": {
+          "rawText": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 5000
+          },
+          "intent": {
+            "type": "string",
+            "enum": [
+              "AUTO",
+              "LOOKUP",
+              "EXAMPLES",
+              "REVIEW",
+              "WORD_FORMS"
+            ]
+          },
+          "uiLocale": {
+            "type": "string",
+            "minLength": 2,
+            "maxLength": 35
+          },
+          "explanationLocale": {
+            "type": "string",
+            "minLength": 2,
+            "maxLength": 35
+          },
+          "targetLanguage": {
+            "type": "string",
+            "minLength": 2,
+            "maxLength": 35
+          },
+          "preferences": {
+            "type": "object",
+            "properties": {
+              "cefrLevel": {
+                "type": "string",
+                "enum": [
+                  "A1",
+                  "A2",
+                  "B1",
+                  "B2",
+                  "C1",
+                  "C2"
+                ]
+              },
+              "englishVariant": {
+                "type": "string",
+                "enum": [
+                  "AUTO",
+                  "UK",
+                  "US"
+                ]
+              },
+              "exampleCount": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 10
+              },
+              "context": {
+                "type": "string",
+                "maxLength": 500
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "rawText",
+          "intent",
+          "uiLocale",
+          "explanationLocale",
+          "targetLanguage"
+        ],
+        "additionalProperties": false
+      },
+      "LearningRun": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "object",
+        "properties": {
+          "schemaVersion": {
+            "type": "number",
+            "const": 1
+          },
+          "runId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 100
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "QUEUED",
+              "RUNNING",
+              "SUCCEEDED",
+              "PARTIAL_SUCCESS",
+              "FAILED",
+              "CANCELLED"
+            ]
+          },
+          "itemCount": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 20
+          },
+          "completedCount": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 20
+          },
+          "items": {
+            "minItems": 1,
+            "maxItems": 20,
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "schemaVersion": {
+                  "type": "number",
+                  "const": 1
+                },
+                "itemId": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 100
+                },
+                "position": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 19
+                },
+                "originalText": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 5000
+                },
+                "normalizedText": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 5000
+                },
+                "detectedKind": {
+                  "type": "string",
+                  "enum": [
+                    "WORD",
+                    "SENTENCE",
+                    "INSTRUCTION",
+                    "UNKNOWN"
+                  ]
+                },
+                "detectedLanguage": {
+                  "type": "string",
+                  "minLength": 2,
+                  "maxLength": 35
+                },
+                "status": {
+                  "type": "string",
+                  "enum": [
+                    "PENDING",
+                    "RUNNING",
+                    "SUCCEEDED",
+                    "FAILED",
+                    "CANCELLED"
+                  ]
+                },
+                "result": {
+                  "oneOf": [
+                    {
+                      "type": "object",
+                      "properties": {
+                        "schemaVersion": {
+                          "type": "number",
+                          "const": 1
+                        },
+                        "type": {
+                          "type": "string",
+                          "const": "WORD_ANALYSIS"
+                        },
+                        "data": {
+                          "type": "object",
+                          "properties": {
+                            "headword": {
+                              "type": "string",
+                              "minLength": 1,
+                              "maxLength": 200
+                            },
+                            "pronunciations": {
+                              "maxItems": 10,
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "variant": {
+                                    "type": "string",
+                                    "enum": [
+                                      "UK",
+                                      "US"
+                                    ]
+                                  },
+                                  "ipa": {
+                                    "type": "string",
+                                    "minLength": 1,
+                                    "maxLength": 200
+                                  }
+                                },
+                                "required": [
+                                  "variant",
+                                  "ipa"
+                                ],
+                                "additionalProperties": false
+                              }
+                            },
+                            "entries": {
+                              "minItems": 1,
+                              "maxItems": 50,
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "entryId": {
+                                    "type": "string",
+                                    "minLength": 1,
+                                    "maxLength": 200
+                                  },
+                                  "partOfSpeech": {
+                                    "type": "string",
+                                    "minLength": 1,
+                                    "maxLength": 50
+                                  },
+                                  "partOfSpeechLabel": {
+                                    "type": "string",
+                                    "minLength": 1,
+                                    "maxLength": 100
+                                  },
+                                  "grammarLabels": {
+                                    "maxItems": 20,
+                                    "type": "array",
+                                    "items": {
+                                      "type": "string",
+                                      "minLength": 1,
+                                      "maxLength": 100
+                                    }
+                                  },
+                                  "senses": {
+                                    "minItems": 1,
+                                    "maxItems": 100,
+                                    "type": "array",
+                                    "items": {
+                                      "type": "object",
+                                      "properties": {
+                                        "senseId": {
+                                          "type": "string",
+                                          "minLength": 1,
+                                          "maxLength": 200
+                                        },
+                                        "zhDefinition": {
+                                          "type": "string",
+                                          "minLength": 1,
+                                          "maxLength": 1000
+                                        },
+                                        "enDefinition": {
+                                          "type": "string",
+                                          "minLength": 1,
+                                          "maxLength": 1000
+                                        },
+                                        "register": {
+                                          "type": "string",
+                                          "maxLength": 100
+                                        },
+                                        "domain": {
+                                          "type": "string",
+                                          "maxLength": 100
+                                        },
+                                        "frequencyBand": {
+                                          "type": "string",
+                                          "maxLength": 100
+                                        }
+                                      },
+                                      "required": [
+                                        "senseId",
+                                        "zhDefinition"
+                                      ],
+                                      "additionalProperties": false
+                                    }
+                                  }
+                                },
+                                "required": [
+                                  "entryId",
+                                  "partOfSpeech",
+                                  "partOfSpeechLabel",
+                                  "grammarLabels",
+                                  "senses"
+                                ],
+                                "additionalProperties": false
+                              }
+                            },
+                            "examples": {
+                              "maxItems": 10,
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "exampleId": {
+                                    "type": "string",
+                                    "minLength": 1,
+                                    "maxLength": 100
+                                  },
+                                  "sentence": {
+                                    "type": "string",
+                                    "minLength": 1,
+                                    "maxLength": 1000
+                                  },
+                                  "translation": {
+                                    "type": "string",
+                                    "minLength": 1,
+                                    "maxLength": 1000
+                                  },
+                                  "senseId": {
+                                    "type": "string",
+                                    "minLength": 1,
+                                    "maxLength": 200
+                                  },
+                                  "cefrLevel": {
+                                    "type": "string",
+                                    "enum": [
+                                      "A1",
+                                      "A2",
+                                      "B1",
+                                      "B2",
+                                      "C1",
+                                      "C2"
+                                    ]
+                                  },
+                                  "highlightedRanges": {
+                                    "maxItems": 20,
+                                    "type": "array",
+                                    "items": {
+                                      "type": "object",
+                                      "properties": {
+                                        "start": {
+                                          "type": "integer",
+                                          "minimum": 0,
+                                          "maximum": 9007199254740991
+                                        },
+                                        "end": {
+                                          "type": "integer",
+                                          "minimum": 1,
+                                          "maximum": 9007199254740991
+                                        }
+                                      },
+                                      "required": [
+                                        "start",
+                                        "end"
+                                      ],
+                                      "additionalProperties": false
+                                    }
+                                  },
+                                  "speakable": {
+                                    "type": "object",
+                                    "properties": {
+                                      "contentId": {
+                                        "type": "string",
+                                        "minLength": 1,
+                                        "maxLength": 100
+                                      },
+                                      "text": {
+                                        "type": "string",
+                                        "minLength": 1,
+                                        "maxLength": 5000
+                                      },
+                                      "language": {
+                                        "type": "string",
+                                        "minLength": 2,
+                                        "maxLength": 35
+                                      },
+                                      "variant": {
+                                        "type": "string",
+                                        "enum": [
+                                          "UK",
+                                          "US"
+                                        ]
+                                      },
+                                      "contentType": {
+                                        "type": "string",
+                                        "enum": [
+                                          "WORD",
+                                          "EXAMPLE",
+                                          "CORRECTION",
+                                          "EXPLANATION"
+                                        ]
+                                      },
+                                      "audio": {
+                                        "type": "object",
+                                        "properties": {
+                                          "status": {
+                                            "type": "string",
+                                            "enum": [
+                                              "NOT_ENABLED",
+                                              "PENDING",
+                                              "READY",
+                                              "FAILED"
+                                            ]
+                                          },
+                                          "url": {
+                                            "type": "string",
+                                            "format": "uri"
+                                          },
+                                          "expiresAt": {
+                                            "type": "string",
+                                            "format": "date-time",
+                                            "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+                                          }
+                                        },
+                                        "required": [
+                                          "status"
+                                        ],
+                                        "additionalProperties": false
+                                      }
+                                    },
+                                    "required": [
+                                      "contentId",
+                                      "text",
+                                      "language",
+                                      "contentType"
+                                    ],
+                                    "additionalProperties": false
+                                  }
+                                },
+                                "required": [
+                                  "exampleId",
+                                  "sentence",
+                                  "translation",
+                                  "senseId",
+                                  "highlightedRanges",
+                                  "speakable"
+                                ],
+                                "additionalProperties": false
+                              }
+                            },
+                            "inflections": {
+                              "maxItems": 50,
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "label": {
+                                    "type": "string",
+                                    "minLength": 1,
+                                    "maxLength": 100
+                                  },
+                                  "form": {
+                                    "type": "string",
+                                    "minLength": 1,
+                                    "maxLength": 200
+                                  }
+                                },
+                                "required": [
+                                  "label",
+                                  "form"
+                                ],
+                                "additionalProperties": false
+                              }
+                            },
+                            "derivations": {
+                              "maxItems": 100,
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "word": {
+                                    "type": "string",
+                                    "minLength": 1,
+                                    "maxLength": 200
+                                  },
+                                  "partOfSpeech": {
+                                    "type": "string",
+                                    "minLength": 1,
+                                    "maxLength": 50
+                                  },
+                                  "zhDefinition": {
+                                    "type": "string",
+                                    "minLength": 1,
+                                    "maxLength": 1000
+                                  },
+                                  "frequencyBand": {
+                                    "type": "string",
+                                    "maxLength": 100
+                                  }
+                                },
+                                "required": [
+                                  "word",
+                                  "partOfSpeech",
+                                  "zhDefinition"
+                                ],
+                                "additionalProperties": false
+                              }
+                            },
+                            "source": {
+                              "type": "object",
+                              "properties": {
+                                "provider": {
+                                  "type": "string",
+                                  "minLength": 1,
+                                  "maxLength": 100
+                                },
+                                "dictionaryVersion": {
+                                  "type": "string",
+                                  "minLength": 1,
+                                  "maxLength": 100
+                                },
+                                "retrievedAt": {
+                                  "type": "string",
+                                  "format": "date-time",
+                                  "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+                                },
+                                "isCompleteForSource": {
+                                  "type": "boolean"
+                                }
+                              },
+                              "required": [
+                                "provider",
+                                "dictionaryVersion",
+                                "retrievedAt",
+                                "isCompleteForSource"
+                              ],
+                              "additionalProperties": false
+                            },
+                            "speakable": {
+                              "maxItems": 20,
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "contentId": {
+                                    "type": "string",
+                                    "minLength": 1,
+                                    "maxLength": 100
+                                  },
+                                  "text": {
+                                    "type": "string",
+                                    "minLength": 1,
+                                    "maxLength": 5000
+                                  },
+                                  "language": {
+                                    "type": "string",
+                                    "minLength": 2,
+                                    "maxLength": 35
+                                  },
+                                  "variant": {
+                                    "type": "string",
+                                    "enum": [
+                                      "UK",
+                                      "US"
+                                    ]
+                                  },
+                                  "contentType": {
+                                    "type": "string",
+                                    "enum": [
+                                      "WORD",
+                                      "EXAMPLE",
+                                      "CORRECTION",
+                                      "EXPLANATION"
+                                    ]
+                                  },
+                                  "audio": {
+                                    "type": "object",
+                                    "properties": {
+                                      "status": {
+                                        "type": "string",
+                                        "enum": [
+                                          "NOT_ENABLED",
+                                          "PENDING",
+                                          "READY",
+                                          "FAILED"
+                                        ]
+                                      },
+                                      "url": {
+                                        "type": "string",
+                                        "format": "uri"
+                                      },
+                                      "expiresAt": {
+                                        "type": "string",
+                                        "format": "date-time",
+                                        "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+                                      }
+                                    },
+                                    "required": [
+                                      "status"
+                                    ],
+                                    "additionalProperties": false
+                                  }
+                                },
+                                "required": [
+                                  "contentId",
+                                  "text",
+                                  "language",
+                                  "contentType"
+                                ],
+                                "additionalProperties": false
+                              }
+                            }
+                          },
+                          "required": [
+                            "headword",
+                            "pronunciations",
+                            "entries",
+                            "examples",
+                            "source",
+                            "speakable"
+                          ],
+                          "additionalProperties": false
+                        }
+                      },
+                      "required": [
+                        "schemaVersion",
+                        "type",
+                        "data"
+                      ],
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "schemaVersion": {
+                          "type": "number",
+                          "const": 1
+                        },
+                        "type": {
+                          "type": "string",
+                          "const": "SENTENCE_REVIEW"
+                        },
+                        "data": {
+                          "type": "object",
+                          "properties": {
+                            "original": {
+                              "type": "string",
+                              "minLength": 1,
+                              "maxLength": 5000
+                            },
+                            "totalScore": {
+                              "type": "integer",
+                              "minimum": 0,
+                              "maximum": 100
+                            },
+                            "dimensions": {
+                              "type": "object",
+                              "properties": {
+                                "grammar": {
+                                  "type": "integer",
+                                  "minimum": 0,
+                                  "maximum": 40
+                                },
+                                "vocabulary": {
+                                  "type": "integer",
+                                  "minimum": 0,
+                                  "maximum": 25
+                                },
+                                "naturalness": {
+                                  "type": "integer",
+                                  "minimum": 0,
+                                  "maximum": 20
+                                },
+                                "spellingAndPunctuation": {
+                                  "type": "integer",
+                                  "minimum": 0,
+                                  "maximum": 15
+                                }
+                              },
+                              "required": [
+                                "grammar",
+                                "vocabulary",
+                                "naturalness",
+                                "spellingAndPunctuation"
+                              ],
+                              "additionalProperties": false
+                            },
+                            "confidence": {
+                              "type": "string",
+                              "enum": [
+                                "HIGH",
+                                "MEDIUM",
+                                "LOW"
+                              ]
+                            },
+                            "assumptions": {
+                              "maxItems": 20,
+                              "type": "array",
+                              "items": {
+                                "type": "string",
+                                "minLength": 1,
+                                "maxLength": 1000
+                              }
+                            },
+                            "issues": {
+                              "maxItems": 100,
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "issueId": {
+                                    "type": "string",
+                                    "minLength": 1,
+                                    "maxLength": 100
+                                  },
+                                  "category": {
+                                    "type": "string",
+                                    "minLength": 1,
+                                    "maxLength": 100
+                                  },
+                                  "severity": {
+                                    "type": "string",
+                                    "enum": [
+                                      "ERROR",
+                                      "WARNING",
+                                      "STYLE"
+                                    ]
+                                  },
+                                  "range": {
+                                    "type": "object",
+                                    "properties": {
+                                      "start": {
+                                        "type": "integer",
+                                        "minimum": 0,
+                                        "maximum": 9007199254740991
+                                      },
+                                      "end": {
+                                        "type": "integer",
+                                        "minimum": 1,
+                                        "maximum": 9007199254740991
+                                      }
+                                    },
+                                    "required": [
+                                      "start",
+                                      "end"
+                                    ],
+                                    "additionalProperties": false
+                                  },
+                                  "originalText": {
+                                    "type": "string",
+                                    "minLength": 1,
+                                    "maxLength": 1000
+                                  },
+                                  "replacement": {
+                                    "type": "string",
+                                    "maxLength": 1000
+                                  },
+                                  "explanation": {
+                                    "type": "string",
+                                    "minLength": 1,
+                                    "maxLength": 2000
+                                  }
+                                },
+                                "required": [
+                                  "issueId",
+                                  "category",
+                                  "severity",
+                                  "range",
+                                  "originalText",
+                                  "explanation"
+                                ],
+                                "additionalProperties": false
+                              }
+                            },
+                            "minimalCorrection": {
+                              "type": "string",
+                              "minLength": 1,
+                              "maxLength": 5000
+                            },
+                            "naturalRewrite": {
+                              "type": "string",
+                              "minLength": 1,
+                              "maxLength": 5000
+                            },
+                            "summary": {
+                              "type": "string",
+                              "minLength": 1,
+                              "maxLength": 2000
+                            },
+                            "speakable": {
+                              "maxItems": 20,
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "contentId": {
+                                    "type": "string",
+                                    "minLength": 1,
+                                    "maxLength": 100
+                                  },
+                                  "text": {
+                                    "type": "string",
+                                    "minLength": 1,
+                                    "maxLength": 5000
+                                  },
+                                  "language": {
+                                    "type": "string",
+                                    "minLength": 2,
+                                    "maxLength": 35
+                                  },
+                                  "variant": {
+                                    "type": "string",
+                                    "enum": [
+                                      "UK",
+                                      "US"
+                                    ]
+                                  },
+                                  "contentType": {
+                                    "type": "string",
+                                    "enum": [
+                                      "WORD",
+                                      "EXAMPLE",
+                                      "CORRECTION",
+                                      "EXPLANATION"
+                                    ]
+                                  },
+                                  "audio": {
+                                    "type": "object",
+                                    "properties": {
+                                      "status": {
+                                        "type": "string",
+                                        "enum": [
+                                          "NOT_ENABLED",
+                                          "PENDING",
+                                          "READY",
+                                          "FAILED"
+                                        ]
+                                      },
+                                      "url": {
+                                        "type": "string",
+                                        "format": "uri"
+                                      },
+                                      "expiresAt": {
+                                        "type": "string",
+                                        "format": "date-time",
+                                        "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+                                      }
+                                    },
+                                    "required": [
+                                      "status"
+                                    ],
+                                    "additionalProperties": false
+                                  }
+                                },
+                                "required": [
+                                  "contentId",
+                                  "text",
+                                  "language",
+                                  "contentType"
+                                ],
+                                "additionalProperties": false
+                              }
+                            },
+                            "rubricVersion": {
+                              "type": "string",
+                              "minLength": 1,
+                              "maxLength": 100
+                            }
+                          },
+                          "required": [
+                            "original",
+                            "totalScore",
+                            "dimensions",
+                            "confidence",
+                            "assumptions",
+                            "issues",
+                            "minimalCorrection",
+                            "summary",
+                            "speakable",
+                            "rubricVersion"
+                          ],
+                          "additionalProperties": false
+                        }
+                      },
+                      "required": [
+                        "schemaVersion",
+                        "type",
+                        "data"
+                      ],
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "schemaVersion": {
+                          "type": "number",
+                          "const": 1
+                        },
+                        "type": {
+                          "type": "string",
+                          "const": "CLARIFICATION"
+                        },
+                        "data": {
+                          "type": "object",
+                          "properties": {
+                            "message": {
+                              "type": "string",
+                              "minLength": 1,
+                              "maxLength": 1000
+                            },
+                            "options": {
+                              "minItems": 1,
+                              "maxItems": 10,
+                              "type": "array",
+                              "items": {
+                                "type": "string",
+                                "minLength": 1,
+                                "maxLength": 200
+                              }
+                            }
+                          },
+                          "required": [
+                            "message",
+                            "options"
+                          ],
+                          "additionalProperties": false
+                        }
+                      },
+                      "required": [
+                        "schemaVersion",
+                        "type",
+                        "data"
+                      ],
+                      "additionalProperties": false
+                    }
+                  ]
+                },
+                "error": {
+                  "type": "object",
+                  "properties": {
+                    "schemaVersion": {
+                      "type": "number",
+                      "const": 1
+                    },
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 100
+                        },
+                        "message": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 1000
+                        },
+                        "retryable": {
+                          "type": "boolean"
+                        },
+                        "details": {
+                          "type": "object",
+                          "propertyNames": {
+                            "type": "string"
+                          },
+                          "additionalProperties": {}
+                        },
+                        "traceId": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 100
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message",
+                        "retryable",
+                        "traceId"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  "required": [
+                    "schemaVersion",
+                    "error"
+                  ],
+                  "additionalProperties": false
+                }
+              },
+              "required": [
+                "schemaVersion",
+                "itemId",
+                "position",
+                "originalText",
+                "normalizedText",
+                "detectedKind",
+                "status"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+          },
+          "expiresAt": {
+            "type": "string",
+            "format": "date-time",
+            "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+          }
+        },
+        "required": [
+          "schemaVersion",
+          "runId",
+          "status",
+          "itemCount",
+          "completedCount",
+          "items",
+          "createdAt"
+        ],
+        "additionalProperties": false
+      },
+      "LearningResult": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "oneOf": [
+          {
+            "type": "object",
+            "properties": {
+              "schemaVersion": {
+                "type": "number",
+                "const": 1
+              },
+              "type": {
+                "type": "string",
+                "const": "WORD_ANALYSIS"
+              },
+              "data": {
+                "type": "object",
+                "properties": {
+                  "headword": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 200
+                  },
+                  "pronunciations": {
+                    "maxItems": 10,
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "variant": {
+                          "type": "string",
+                          "enum": [
+                            "UK",
+                            "US"
+                          ]
+                        },
+                        "ipa": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 200
+                        }
+                      },
+                      "required": [
+                        "variant",
+                        "ipa"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  "entries": {
+                    "minItems": 1,
+                    "maxItems": 50,
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "entryId": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 200
+                        },
+                        "partOfSpeech": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 50
+                        },
+                        "partOfSpeechLabel": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 100
+                        },
+                        "grammarLabels": {
+                          "maxItems": 20,
+                          "type": "array",
+                          "items": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 100
+                          }
+                        },
+                        "senses": {
+                          "minItems": 1,
+                          "maxItems": 100,
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "senseId": {
+                                "type": "string",
+                                "minLength": 1,
+                                "maxLength": 200
+                              },
+                              "zhDefinition": {
+                                "type": "string",
+                                "minLength": 1,
+                                "maxLength": 1000
+                              },
+                              "enDefinition": {
+                                "type": "string",
+                                "minLength": 1,
+                                "maxLength": 1000
+                              },
+                              "register": {
+                                "type": "string",
+                                "maxLength": 100
+                              },
+                              "domain": {
+                                "type": "string",
+                                "maxLength": 100
+                              },
+                              "frequencyBand": {
+                                "type": "string",
+                                "maxLength": 100
+                              }
+                            },
+                            "required": [
+                              "senseId",
+                              "zhDefinition"
+                            ],
+                            "additionalProperties": false
+                          }
+                        }
+                      },
+                      "required": [
+                        "entryId",
+                        "partOfSpeech",
+                        "partOfSpeechLabel",
+                        "grammarLabels",
+                        "senses"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  "examples": {
+                    "maxItems": 10,
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "exampleId": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 100
+                        },
+                        "sentence": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 1000
+                        },
+                        "translation": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 1000
+                        },
+                        "senseId": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 200
+                        },
+                        "cefrLevel": {
+                          "type": "string",
+                          "enum": [
+                            "A1",
+                            "A2",
+                            "B1",
+                            "B2",
+                            "C1",
+                            "C2"
+                          ]
+                        },
+                        "highlightedRanges": {
+                          "maxItems": 20,
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "start": {
+                                "type": "integer",
+                                "minimum": 0,
+                                "maximum": 9007199254740991
+                              },
+                              "end": {
+                                "type": "integer",
+                                "minimum": 1,
+                                "maximum": 9007199254740991
+                              }
+                            },
+                            "required": [
+                              "start",
+                              "end"
+                            ],
+                            "additionalProperties": false
+                          }
+                        },
+                        "speakable": {
+                          "type": "object",
+                          "properties": {
+                            "contentId": {
+                              "type": "string",
+                              "minLength": 1,
+                              "maxLength": 100
+                            },
+                            "text": {
+                              "type": "string",
+                              "minLength": 1,
+                              "maxLength": 5000
+                            },
+                            "language": {
+                              "type": "string",
+                              "minLength": 2,
+                              "maxLength": 35
+                            },
+                            "variant": {
+                              "type": "string",
+                              "enum": [
+                                "UK",
+                                "US"
+                              ]
+                            },
+                            "contentType": {
+                              "type": "string",
+                              "enum": [
+                                "WORD",
+                                "EXAMPLE",
+                                "CORRECTION",
+                                "EXPLANATION"
+                              ]
+                            },
+                            "audio": {
+                              "type": "object",
+                              "properties": {
+                                "status": {
+                                  "type": "string",
+                                  "enum": [
+                                    "NOT_ENABLED",
+                                    "PENDING",
+                                    "READY",
+                                    "FAILED"
+                                  ]
+                                },
+                                "url": {
+                                  "type": "string",
+                                  "format": "uri"
+                                },
+                                "expiresAt": {
+                                  "type": "string",
+                                  "format": "date-time",
+                                  "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+                                }
+                              },
+                              "required": [
+                                "status"
+                              ],
+                              "additionalProperties": false
+                            }
+                          },
+                          "required": [
+                            "contentId",
+                            "text",
+                            "language",
+                            "contentType"
+                          ],
+                          "additionalProperties": false
+                        }
+                      },
+                      "required": [
+                        "exampleId",
+                        "sentence",
+                        "translation",
+                        "senseId",
+                        "highlightedRanges",
+                        "speakable"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  "inflections": {
+                    "maxItems": 50,
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "label": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 100
+                        },
+                        "form": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 200
+                        }
+                      },
+                      "required": [
+                        "label",
+                        "form"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  "derivations": {
+                    "maxItems": 100,
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "word": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 200
+                        },
+                        "partOfSpeech": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 50
+                        },
+                        "zhDefinition": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 1000
+                        },
+                        "frequencyBand": {
+                          "type": "string",
+                          "maxLength": 100
+                        }
+                      },
+                      "required": [
+                        "word",
+                        "partOfSpeech",
+                        "zhDefinition"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  "source": {
+                    "type": "object",
+                    "properties": {
+                      "provider": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 100
+                      },
+                      "dictionaryVersion": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 100
+                      },
+                      "retrievedAt": {
+                        "type": "string",
+                        "format": "date-time",
+                        "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+                      },
+                      "isCompleteForSource": {
+                        "type": "boolean"
+                      }
+                    },
+                    "required": [
+                      "provider",
+                      "dictionaryVersion",
+                      "retrievedAt",
+                      "isCompleteForSource"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "speakable": {
+                    "maxItems": 20,
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "contentId": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 100
+                        },
+                        "text": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 5000
+                        },
+                        "language": {
+                          "type": "string",
+                          "minLength": 2,
+                          "maxLength": 35
+                        },
+                        "variant": {
+                          "type": "string",
+                          "enum": [
+                            "UK",
+                            "US"
+                          ]
+                        },
+                        "contentType": {
+                          "type": "string",
+                          "enum": [
+                            "WORD",
+                            "EXAMPLE",
+                            "CORRECTION",
+                            "EXPLANATION"
+                          ]
+                        },
+                        "audio": {
+                          "type": "object",
+                          "properties": {
+                            "status": {
+                              "type": "string",
+                              "enum": [
+                                "NOT_ENABLED",
+                                "PENDING",
+                                "READY",
+                                "FAILED"
+                              ]
+                            },
+                            "url": {
+                              "type": "string",
+                              "format": "uri"
+                            },
+                            "expiresAt": {
+                              "type": "string",
+                              "format": "date-time",
+                              "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+                            }
+                          },
+                          "required": [
+                            "status"
+                          ],
+                          "additionalProperties": false
+                        }
+                      },
+                      "required": [
+                        "contentId",
+                        "text",
+                        "language",
+                        "contentType"
+                      ],
+                      "additionalProperties": false
+                    }
+                  }
+                },
+                "required": [
+                  "headword",
+                  "pronunciations",
+                  "entries",
+                  "examples",
+                  "source",
+                  "speakable"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "required": [
+              "schemaVersion",
+              "type",
+              "data"
+            ],
+            "additionalProperties": false
+          },
+          {
+            "type": "object",
+            "properties": {
+              "schemaVersion": {
+                "type": "number",
+                "const": 1
+              },
+              "type": {
+                "type": "string",
+                "const": "SENTENCE_REVIEW"
+              },
+              "data": {
+                "type": "object",
+                "properties": {
+                  "original": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 5000
+                  },
+                  "totalScore": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 100
+                  },
+                  "dimensions": {
+                    "type": "object",
+                    "properties": {
+                      "grammar": {
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": 40
+                      },
+                      "vocabulary": {
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": 25
+                      },
+                      "naturalness": {
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": 20
+                      },
+                      "spellingAndPunctuation": {
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": 15
+                      }
+                    },
+                    "required": [
+                      "grammar",
+                      "vocabulary",
+                      "naturalness",
+                      "spellingAndPunctuation"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "confidence": {
+                    "type": "string",
+                    "enum": [
+                      "HIGH",
+                      "MEDIUM",
+                      "LOW"
+                    ]
+                  },
+                  "assumptions": {
+                    "maxItems": 20,
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 1000
+                    }
+                  },
+                  "issues": {
+                    "maxItems": 100,
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "issueId": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 100
+                        },
+                        "category": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 100
+                        },
+                        "severity": {
+                          "type": "string",
+                          "enum": [
+                            "ERROR",
+                            "WARNING",
+                            "STYLE"
+                          ]
+                        },
+                        "range": {
+                          "type": "object",
+                          "properties": {
+                            "start": {
+                              "type": "integer",
+                              "minimum": 0,
+                              "maximum": 9007199254740991
+                            },
+                            "end": {
+                              "type": "integer",
+                              "minimum": 1,
+                              "maximum": 9007199254740991
+                            }
+                          },
+                          "required": [
+                            "start",
+                            "end"
+                          ],
+                          "additionalProperties": false
+                        },
+                        "originalText": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 1000
+                        },
+                        "replacement": {
+                          "type": "string",
+                          "maxLength": 1000
+                        },
+                        "explanation": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 2000
+                        }
+                      },
+                      "required": [
+                        "issueId",
+                        "category",
+                        "severity",
+                        "range",
+                        "originalText",
+                        "explanation"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  "minimalCorrection": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 5000
+                  },
+                  "naturalRewrite": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 5000
+                  },
+                  "summary": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 2000
+                  },
+                  "speakable": {
+                    "maxItems": 20,
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "contentId": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 100
+                        },
+                        "text": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 5000
+                        },
+                        "language": {
+                          "type": "string",
+                          "minLength": 2,
+                          "maxLength": 35
+                        },
+                        "variant": {
+                          "type": "string",
+                          "enum": [
+                            "UK",
+                            "US"
+                          ]
+                        },
+                        "contentType": {
+                          "type": "string",
+                          "enum": [
+                            "WORD",
+                            "EXAMPLE",
+                            "CORRECTION",
+                            "EXPLANATION"
+                          ]
+                        },
+                        "audio": {
+                          "type": "object",
+                          "properties": {
+                            "status": {
+                              "type": "string",
+                              "enum": [
+                                "NOT_ENABLED",
+                                "PENDING",
+                                "READY",
+                                "FAILED"
+                              ]
+                            },
+                            "url": {
+                              "type": "string",
+                              "format": "uri"
+                            },
+                            "expiresAt": {
+                              "type": "string",
+                              "format": "date-time",
+                              "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+                            }
+                          },
+                          "required": [
+                            "status"
+                          ],
+                          "additionalProperties": false
+                        }
+                      },
+                      "required": [
+                        "contentId",
+                        "text",
+                        "language",
+                        "contentType"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  "rubricVersion": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 100
+                  }
+                },
+                "required": [
+                  "original",
+                  "totalScore",
+                  "dimensions",
+                  "confidence",
+                  "assumptions",
+                  "issues",
+                  "minimalCorrection",
+                  "summary",
+                  "speakable",
+                  "rubricVersion"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "required": [
+              "schemaVersion",
+              "type",
+              "data"
+            ],
+            "additionalProperties": false
+          },
+          {
+            "type": "object",
+            "properties": {
+              "schemaVersion": {
+                "type": "number",
+                "const": 1
+              },
+              "type": {
+                "type": "string",
+                "const": "CLARIFICATION"
+              },
+              "data": {
+                "type": "object",
+                "properties": {
+                  "message": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 1000
+                  },
+                  "options": {
+                    "minItems": 1,
+                    "maxItems": 10,
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 200
+                    }
+                  }
+                },
+                "required": [
+                  "message",
+                  "options"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "required": [
+              "schemaVersion",
+              "type",
+              "data"
+            ],
+            "additionalProperties": false
+          }
+        ]
+      },
+      "WordAnalysis": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "object",
+        "properties": {
+          "headword": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 200
+          },
+          "pronunciations": {
+            "maxItems": 10,
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "variant": {
+                  "type": "string",
+                  "enum": [
+                    "UK",
+                    "US"
+                  ]
+                },
+                "ipa": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 200
+                }
+              },
+              "required": [
+                "variant",
+                "ipa"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "entries": {
+            "minItems": 1,
+            "maxItems": 50,
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "entryId": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 200
+                },
+                "partOfSpeech": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 50
+                },
+                "partOfSpeechLabel": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 100
+                },
+                "grammarLabels": {
+                  "maxItems": 20,
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 100
+                  }
+                },
+                "senses": {
+                  "minItems": 1,
+                  "maxItems": 100,
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "senseId": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 200
+                      },
+                      "zhDefinition": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 1000
+                      },
+                      "enDefinition": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 1000
+                      },
+                      "register": {
+                        "type": "string",
+                        "maxLength": 100
+                      },
+                      "domain": {
+                        "type": "string",
+                        "maxLength": 100
+                      },
+                      "frequencyBand": {
+                        "type": "string",
+                        "maxLength": 100
+                      }
+                    },
+                    "required": [
+                      "senseId",
+                      "zhDefinition"
+                    ],
+                    "additionalProperties": false
+                  }
+                }
+              },
+              "required": [
+                "entryId",
+                "partOfSpeech",
+                "partOfSpeechLabel",
+                "grammarLabels",
+                "senses"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "examples": {
+            "maxItems": 10,
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "exampleId": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 100
+                },
+                "sentence": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 1000
+                },
+                "translation": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 1000
+                },
+                "senseId": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 200
+                },
+                "cefrLevel": {
+                  "type": "string",
+                  "enum": [
+                    "A1",
+                    "A2",
+                    "B1",
+                    "B2",
+                    "C1",
+                    "C2"
+                  ]
+                },
+                "highlightedRanges": {
+                  "maxItems": 20,
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "start": {
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": 9007199254740991
+                      },
+                      "end": {
+                        "type": "integer",
+                        "minimum": 1,
+                        "maximum": 9007199254740991
+                      }
+                    },
+                    "required": [
+                      "start",
+                      "end"
+                    ],
+                    "additionalProperties": false
+                  }
+                },
+                "speakable": {
+                  "type": "object",
+                  "properties": {
+                    "contentId": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 100
+                    },
+                    "text": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 5000
+                    },
+                    "language": {
+                      "type": "string",
+                      "minLength": 2,
+                      "maxLength": 35
+                    },
+                    "variant": {
+                      "type": "string",
+                      "enum": [
+                        "UK",
+                        "US"
+                      ]
+                    },
+                    "contentType": {
+                      "type": "string",
+                      "enum": [
+                        "WORD",
+                        "EXAMPLE",
+                        "CORRECTION",
+                        "EXPLANATION"
+                      ]
+                    },
+                    "audio": {
+                      "type": "object",
+                      "properties": {
+                        "status": {
+                          "type": "string",
+                          "enum": [
+                            "NOT_ENABLED",
+                            "PENDING",
+                            "READY",
+                            "FAILED"
+                          ]
+                        },
+                        "url": {
+                          "type": "string",
+                          "format": "uri"
+                        },
+                        "expiresAt": {
+                          "type": "string",
+                          "format": "date-time",
+                          "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+                        }
+                      },
+                      "required": [
+                        "status"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  "required": [
+                    "contentId",
+                    "text",
+                    "language",
+                    "contentType"
+                  ],
+                  "additionalProperties": false
+                }
+              },
+              "required": [
+                "exampleId",
+                "sentence",
+                "translation",
+                "senseId",
+                "highlightedRanges",
+                "speakable"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "inflections": {
+            "maxItems": 50,
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "label": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 100
+                },
+                "form": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 200
+                }
+              },
+              "required": [
+                "label",
+                "form"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "derivations": {
+            "maxItems": 100,
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "word": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 200
+                },
+                "partOfSpeech": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 50
+                },
+                "zhDefinition": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 1000
+                },
+                "frequencyBand": {
+                  "type": "string",
+                  "maxLength": 100
+                }
+              },
+              "required": [
+                "word",
+                "partOfSpeech",
+                "zhDefinition"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "source": {
+            "type": "object",
+            "properties": {
+              "provider": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 100
+              },
+              "dictionaryVersion": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 100
+              },
+              "retrievedAt": {
+                "type": "string",
+                "format": "date-time",
+                "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+              },
+              "isCompleteForSource": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "provider",
+              "dictionaryVersion",
+              "retrievedAt",
+              "isCompleteForSource"
+            ],
+            "additionalProperties": false
+          },
+          "speakable": {
+            "maxItems": 20,
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "contentId": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 100
+                },
+                "text": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 5000
+                },
+                "language": {
+                  "type": "string",
+                  "minLength": 2,
+                  "maxLength": 35
+                },
+                "variant": {
+                  "type": "string",
+                  "enum": [
+                    "UK",
+                    "US"
+                  ]
+                },
+                "contentType": {
+                  "type": "string",
+                  "enum": [
+                    "WORD",
+                    "EXAMPLE",
+                    "CORRECTION",
+                    "EXPLANATION"
+                  ]
+                },
+                "audio": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "enum": [
+                        "NOT_ENABLED",
+                        "PENDING",
+                        "READY",
+                        "FAILED"
+                      ]
+                    },
+                    "url": {
+                      "type": "string",
+                      "format": "uri"
+                    },
+                    "expiresAt": {
+                      "type": "string",
+                      "format": "date-time",
+                      "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+                    }
+                  },
+                  "required": [
+                    "status"
+                  ],
+                  "additionalProperties": false
+                }
+              },
+              "required": [
+                "contentId",
+                "text",
+                "language",
+                "contentType"
+              ],
+              "additionalProperties": false
+            }
+          }
+        },
+        "required": [
+          "headword",
+          "pronunciations",
+          "entries",
+          "examples",
+          "source",
+          "speakable"
+        ],
+        "additionalProperties": false
+      },
+      "SentenceReview": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "object",
+        "properties": {
+          "original": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 5000
+          },
+          "totalScore": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 100
+          },
+          "dimensions": {
+            "type": "object",
+            "properties": {
+              "grammar": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 40
+              },
+              "vocabulary": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 25
+              },
+              "naturalness": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 20
+              },
+              "spellingAndPunctuation": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 15
+              }
+            },
+            "required": [
+              "grammar",
+              "vocabulary",
+              "naturalness",
+              "spellingAndPunctuation"
+            ],
+            "additionalProperties": false
+          },
+          "confidence": {
+            "type": "string",
+            "enum": [
+              "HIGH",
+              "MEDIUM",
+              "LOW"
+            ]
+          },
+          "assumptions": {
+            "maxItems": 20,
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 1000
+            }
+          },
+          "issues": {
+            "maxItems": 100,
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "issueId": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 100
+                },
+                "category": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 100
+                },
+                "severity": {
+                  "type": "string",
+                  "enum": [
+                    "ERROR",
+                    "WARNING",
+                    "STYLE"
+                  ]
+                },
+                "range": {
+                  "type": "object",
+                  "properties": {
+                    "start": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 9007199254740991
+                    },
+                    "end": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 9007199254740991
+                    }
+                  },
+                  "required": [
+                    "start",
+                    "end"
+                  ],
+                  "additionalProperties": false
+                },
+                "originalText": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 1000
+                },
+                "replacement": {
+                  "type": "string",
+                  "maxLength": 1000
+                },
+                "explanation": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 2000
+                }
+              },
+              "required": [
+                "issueId",
+                "category",
+                "severity",
+                "range",
+                "originalText",
+                "explanation"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "minimalCorrection": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 5000
+          },
+          "naturalRewrite": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 5000
+          },
+          "summary": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 2000
+          },
+          "speakable": {
+            "maxItems": 20,
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "contentId": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 100
+                },
+                "text": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 5000
+                },
+                "language": {
+                  "type": "string",
+                  "minLength": 2,
+                  "maxLength": 35
+                },
+                "variant": {
+                  "type": "string",
+                  "enum": [
+                    "UK",
+                    "US"
+                  ]
+                },
+                "contentType": {
+                  "type": "string",
+                  "enum": [
+                    "WORD",
+                    "EXAMPLE",
+                    "CORRECTION",
+                    "EXPLANATION"
+                  ]
+                },
+                "audio": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "enum": [
+                        "NOT_ENABLED",
+                        "PENDING",
+                        "READY",
+                        "FAILED"
+                      ]
+                    },
+                    "url": {
+                      "type": "string",
+                      "format": "uri"
+                    },
+                    "expiresAt": {
+                      "type": "string",
+                      "format": "date-time",
+                      "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+                    }
+                  },
+                  "required": [
+                    "status"
+                  ],
+                  "additionalProperties": false
+                }
+              },
+              "required": [
+                "contentId",
+                "text",
+                "language",
+                "contentType"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "rubricVersion": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 100
+          }
+        },
+        "required": [
+          "original",
+          "totalScore",
+          "dimensions",
+          "confidence",
+          "assumptions",
+          "issues",
+          "minimalCorrection",
+          "summary",
+          "speakable",
+          "rubricVersion"
+        ],
+        "additionalProperties": false
+      },
+      "PublicError": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "object",
+        "properties": {
+          "schemaVersion": {
+            "type": "number",
+            "const": 1
+          },
+          "error": {
+            "type": "object",
+            "properties": {
+              "code": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 100
+              },
+              "message": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 1000
+              },
+              "retryable": {
+                "type": "boolean"
+              },
+              "details": {
+                "type": "object",
+                "propertyNames": {
+                  "type": "string"
+                },
+                "additionalProperties": {}
+              },
+              "traceId": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 100
+              }
+            },
+            "required": [
+              "code",
+              "message",
+              "retryable",
+              "traceId"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "schemaVersion",
+          "error"
+        ],
+        "additionalProperties": false
+      },
+      "CapabilityManifest": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "object",
+        "properties": {
+          "schemaVersion": {
+            "type": "number",
+            "const": 1
+          },
+          "speech": {
+            "type": "object",
+            "properties": {
+              "status": {
+                "type": "string",
+                "enum": [
+                  "NOT_ENABLED",
+                  "AVAILABLE"
+                ]
+              }
+            },
+            "required": [
+              "status"
+            ],
+            "additionalProperties": false
+          },
+          "targetLanguages": {
+            "minItems": 1,
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 2,
+              "maxLength": 35
+            }
+          },
+          "uiLocales": {
+            "minItems": 1,
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 2,
+              "maxLength": 35
+            }
+          },
+          "extensionSlots": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "header",
+                "composer.before",
+                "result.card.after",
+                "sidebar"
+              ]
+            }
+          }
+        },
+        "required": [
+          "schemaVersion",
+          "speech",
+          "targetLanguages",
+          "uiLocales",
+          "extensionSlots"
+        ],
+        "additionalProperties": false
+      }
+    }
+  }
+}
