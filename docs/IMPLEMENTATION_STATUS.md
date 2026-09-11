@@ -1,6 +1,6 @@
 # 实施状态
 
-- 更新日期：2026-09-10
+- 更新日期：2026-09-11
 - 开发分支：`feature/foundation-contracts`
 - 产品/架构文档状态：仍为 Draft/Proposed
 
@@ -10,6 +10,7 @@
 - Task 1.2：LearningRun、LearningItem、WordAnalysis、SentenceReview、PublicError、CapabilityManifest 的 Zod/TypeScript 契约；JSON Schema 与 OpenAPI 由同一来源生成并做漂移检查。
 - Task 1.5：最多 20 项/5000 Unicode code point 的输入拆分、NFKC 规范化、顺序保留、类型识别、显式意图优先和 30 条黄金解析案例。
 - ADR-004 的部分 MVP 扩展点：`SpeechProvider`、`DisabledSpeechProvider`、稳定 UI slot ID 和 `/api/v1/capabilities`。
+- 合并前加固：拒绝空白输入，校验 LearningItem 成功/失败状态载荷和项目顺序，并为 Web 全路由配置 CSP、点击劫持、MIME 嗅探、Referrer 与浏览器能力限制响应头。
 
 ## 当前验证
 
@@ -17,9 +18,10 @@
 
 - `pnpm lint`
 - `pnpm typecheck`
-- `pnpm test`（58 条测试）
+- `pnpm test`（63 条测试）
 - `pnpm build`
 - `pnpm --filter @english-teacher/contracts check:generated`
+- `pnpm audit --audit-level high --registry https://registry.npmjs.org`（无已知漏洞）
 
 ## 临时实施假设
 
