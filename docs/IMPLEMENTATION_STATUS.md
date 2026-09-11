@@ -1,7 +1,7 @@
 # 实施状态
 
 - 更新日期：2026-09-11
-- 开发分支：`feature/foundation-contracts`
+- 交付分支：`main`（由 `feature/foundation-contracts` 快进合并）
 - 产品/架构文档状态：仍为 Draft/Proposed
 
 ## 已完成
