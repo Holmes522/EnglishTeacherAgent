@@ -18,4 +18,3 @@ describe("GET /api/v1/capabilities", () => {
     });
   });
 });
-

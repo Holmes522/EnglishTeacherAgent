@@ -21,4 +21,3 @@ describe("generated contracts", () => {
     expect(document.components.schemas.PublicError).toBeDefined();
   });
 });
-

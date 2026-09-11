@@ -26,4 +26,3 @@ for (const [path, value] of outputs) {
     await writeFile(path, expected, "utf8");
   }
 }
-

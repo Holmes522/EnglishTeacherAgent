@@ -32,4 +32,3 @@ describe("parseEnvironment", () => {
     expect(() => parseEnvironment({ PORT: "70000" })).toThrow();
   });
 });
-

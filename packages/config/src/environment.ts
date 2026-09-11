@@ -21,4 +21,3 @@ export function parseEnvironment(
 ): AppEnvironment {
   return environmentSchema.parse(environment);
 }
-

@@ -83,4 +83,3 @@ describe("capabilityManifestSchema", () => {
     ).toBe("NOT_ENABLED");
   });
 });
-

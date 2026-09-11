@@ -23,4 +23,3 @@ describe("DisabledSpeechProvider", () => {
     await expect(request).rejects.toMatchObject({ code: "SPEECH_NOT_ENABLED" });
   });
 });
-

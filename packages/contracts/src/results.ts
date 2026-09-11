@@ -193,4 +193,3 @@ export type SentenceReview = z.infer<typeof sentenceReviewSchema>;
 export type LearningResult = z.infer<typeof learningResultSchema>;
 export type PublicError = z.infer<typeof publicErrorSchema>;
 export type CapabilityManifest = z.infer<typeof capabilityManifestSchema>;
-
