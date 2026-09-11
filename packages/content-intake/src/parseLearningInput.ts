@@ -19,6 +19,15 @@ export class IntakeLimitError extends Error {
   }
 }
 
+export class IntakeValidationError extends Error {
+  readonly code = "EMPTY_INPUT";
+
+  constructor(message: string) {
+    super(message);
+    this.name = "IntakeValidationError";
+  }
+}
+
 export interface IntakeItem {
   position: number;
   originalText: string;
@@ -101,6 +110,10 @@ export function parseLearningInput(input: {
     .flatMap((line) => segmentLine(line.trim()))
     .map(stripPresentationSyntax)
     .filter(Boolean);
+
+  if (originalItems.length === 0) {
+    throw new IntakeValidationError("Input must contain at least one learning item");
+  }
 
   if (originalItems.length > MAX_ITEMS) {
     throw new IntakeLimitError("TOO_MANY_ITEMS", "Input contains more than 20 items");

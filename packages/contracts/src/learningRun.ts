@@ -37,18 +37,52 @@ export const createLearningRunInputSchema = z.object({
     .optional(),
 });
 
-export const learningItemSchema = z.object({
-  schemaVersion: z.literal(1),
-  itemId: z.string().min(1).max(100),
-  position: z.number().int().min(0).max(19),
-  originalText: unicodeTextSchema,
-  normalizedText: unicodeTextSchema,
-  detectedKind: inputKindSchema,
-  detectedLanguage: z.string().min(2).max(35).optional(),
-  status: z.enum(["PENDING", "RUNNING", "SUCCEEDED", "FAILED", "CANCELLED"]),
-  result: learningResultSchema.optional(),
-  error: publicErrorSchema.optional(),
-});
+export const learningItemSchema = z
+  .object({
+    schemaVersion: z.literal(1),
+    itemId: z.string().min(1).max(100),
+    position: z.number().int().min(0).max(19),
+    originalText: unicodeTextSchema,
+    normalizedText: unicodeTextSchema,
+    detectedKind: inputKindSchema,
+    detectedLanguage: z.string().min(2).max(35).optional(),
+    status: z.enum(["PENDING", "RUNNING", "SUCCEEDED", "FAILED", "CANCELLED"]),
+    result: learningResultSchema.optional(),
+    error: publicErrorSchema.optional(),
+  })
+  .superRefine((item, context) => {
+    if (item.status === "SUCCEEDED" && item.result === undefined) {
+      context.addIssue({
+        code: "custom",
+        message: "A succeeded item must contain a result",
+        path: ["result"],
+      });
+    }
+
+    if (item.status === "SUCCEEDED" && item.error !== undefined) {
+      context.addIssue({
+        code: "custom",
+        message: "A succeeded item cannot contain an error",
+        path: ["error"],
+      });
+    }
+
+    if (item.status === "FAILED" && item.error === undefined) {
+      context.addIssue({
+        code: "custom",
+        message: "A failed item must contain a public error",
+        path: ["error"],
+      });
+    }
+
+    if (item.status === "FAILED" && item.result !== undefined) {
+      context.addIssue({
+        code: "custom",
+        message: "A failed item cannot contain a result",
+        path: ["result"],
+      });
+    }
+  });
 
 export const learningRunSchema = z
   .object({
@@ -84,6 +118,16 @@ export const learningRunSchema = z
         path: ["completedCount"],
       });
     }
+
+    run.items.forEach((item, index) => {
+      if (item.position !== index) {
+        context.addIssue({
+          code: "custom",
+          message: "Item position must match its order in the run",
+          path: ["items", index, "position"],
+        });
+      }
+    });
   });
 
 export type CreateLearningRunInput = z.infer<typeof createLearningRunInputSchema>;

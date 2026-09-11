@@ -1,7 +1,11 @@
 import { describe, expect, it } from "vitest";
 
 import goldenCases from "../../../tests/golden/intake-cases.json" with { type: "json" };
-import { IntakeLimitError, parseLearningInput } from "./parseLearningInput.js";
+import {
+  IntakeLimitError,
+  IntakeValidationError,
+  parseLearningInput,
+} from "./parseLearningInput.js";
 
 describe("parseLearningInput", () => {
   it("splits mixed numbered and bulleted input while preserving order", () => {
@@ -61,6 +65,12 @@ describe("parseLearningInput", () => {
     expect(() =>
       parseLearningInput({ rawText: "😀".repeat(5_001), intent: "AUTO" }),
     ).toThrow(IntakeLimitError);
+  });
+
+  it("rejects input that contains only whitespace", () => {
+    expect(() => parseLearningInput({ rawText: "  \n\t ", intent: "AUTO" })).toThrow(
+      IntakeValidationError,
+    );
   });
 
   it.each(goldenCases)("classifies golden case: $text", ({ text, kind }) => {
