@@ -13,6 +13,7 @@
     "@english-teacher/contracts": "workspace:*",
     "@english-teacher/content-intake": "workspace:*",
     "bullmq": "6.3.4",
+    "ioredis": "5.11.1",
     "pg": "8.23.0"
   },
   "devDependencies": { "@types/pg": "8.23.1" }

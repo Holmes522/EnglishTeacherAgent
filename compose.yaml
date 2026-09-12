@@ -1,7 +1,7 @@
 name: english-teacher-agent
 services:
   postgres:
-    image: postgres:17.9-alpine
+    image: postgres:17.11-alpine
     environment:
       POSTGRES_USER: english_teacher
       POSTGRES_PASSWORD: local-development-only
@@ -16,7 +16,7 @@ services:
       timeout: 3s
       retries: 20
   redis:
-    image: redis:7.4.8-alpine
+    image: redis:7.4.11-alpine
     command: ["redis-server", "--appendonly", "yes", "--maxmemory-policy", "noeviction"]
     ports:
       - "127.0.0.1:56379:6379"

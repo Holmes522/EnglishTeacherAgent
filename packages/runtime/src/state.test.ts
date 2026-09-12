@@ -14,11 +14,29 @@ describe("learning state machine", () => {
     expect(() => assertItemTransition("PENDING", "SUCCEEDED")).toThrow();
   });
   it("counts terminal items and distinguishes partial failure", () => {
-    expect(summarizeStatuses(["PENDING", "PENDING"])).toEqual({ status: "QUEUED", completedCount: 0 });
-    expect(summarizeStatuses(["SUCCEEDED", "RUNNING"])).toEqual({ status: "RUNNING", completedCount: 1 });
-    expect(summarizeStatuses(["SUCCEEDED", "FAILED"])).toEqual({ status: "PARTIAL_SUCCESS", completedCount: 2 });
-    expect(summarizeStatuses(["FAILED"])).toEqual({ status: "FAILED", completedCount: 1 });
-    expect(summarizeStatuses(["SUCCEEDED", "CANCELLED"])).toEqual({ status: "CANCELLED", completedCount: 2 });
-    expect(summarizeStatuses(["SUCCEEDED"])).toEqual({ status: "SUCCEEDED", completedCount: 1 });
+    expect(summarizeStatuses(["PENDING", "PENDING"])).toEqual({
+      status: "QUEUED",
+      completedCount: 0,
+    });
+    expect(summarizeStatuses(["SUCCEEDED", "RUNNING"])).toEqual({
+      status: "RUNNING",
+      completedCount: 1,
+    });
+    expect(summarizeStatuses(["SUCCEEDED", "FAILED"])).toEqual({
+      status: "PARTIAL_SUCCESS",
+      completedCount: 2,
+    });
+    expect(summarizeStatuses(["FAILED"])).toEqual({
+      status: "FAILED",
+      completedCount: 1,
+    });
+    expect(summarizeStatuses(["SUCCEEDED", "CANCELLED"])).toEqual({
+      status: "CANCELLED",
+      completedCount: 2,
+    });
+    expect(summarizeStatuses(["SUCCEEDED"])).toEqual({
+      status: "SUCCEEDED",
+      completedCount: 1,
+    });
   });
 });

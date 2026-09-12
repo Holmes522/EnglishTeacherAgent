@@ -2,6 +2,7 @@
   "name": "english-teacher-agent",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "packageManager": "pnpm@11.19.0",
   "engines": {
     "node": ">=24 <25",
@@ -10,6 +11,10 @@
   "scripts": {
     "dev": "pnpm build:packages && pnpm --parallel --filter @english-teacher/web --filter @english-teacher/worker dev",
     "build:packages": "pnpm -r --filter \"!english-teacher-agent\" --filter \"!@english-teacher/web\" --filter \"!@english-teacher/worker\" --if-present build",
+    "infra:up": "docker compose up -d --wait",
+    "infra:down": "docker compose down",
+    "db:migrate": "pnpm --filter @english-teacher/runtime migrate",
+    "test:integration": "pnpm build:packages && vitest run --config vitest.integration.config.ts",
     "lint": "eslint . --max-warnings 0",
     "typecheck": "pnpm -r --if-present typecheck",
     "test": "vitest run --passWithNoTests && pnpm --filter @english-teacher/contracts check:generated",
