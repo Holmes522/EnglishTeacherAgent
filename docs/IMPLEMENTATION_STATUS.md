@@ -1,8 +1,8 @@
 # 实施状态
 
-- 更新日期：2026-09-11
-- 交付分支：`main`（由 `feature/foundation-contracts` 快进合并）
-- 产品/架构文档状态：仍为 Draft/Proposed
+- 更新日期：2026-09-12
+- 交付分支：`main`（由 `codex/learning-run-pipeline` 快进合并）
+- 产品/架构文档整体仍为 Draft/Proposed；ADR-005 的本地运行方案已获确认，不代表生产部署获批。
 
 ## 已完成
 
@@ -11,6 +11,10 @@
 - Task 1.5：最多 20 项/5000 Unicode code point 的输入拆分、NFKC 规范化、顺序保留、类型识别、显式意图优先和 30 条黄金解析案例。
 - ADR-004 的部分 MVP 扩展点：`SpeechProvider`、`DisabledSpeechProvider`、稳定 UI slot ID 和 `/api/v1/capabilities`。
 - 合并前加固：拒绝空白输入，校验 LearningItem 成功/失败状态载荷和项目顺序，并为 Web 全路由配置 CSP、点击劫持、MIME 嗅探、Referrer 与浏览器能力限制响应头。
+- Task 1.3：PostgreSQL 迁移、事务 run/items/events/outbox、BullMQ 至少一次投递、尝试记录、租约续期与 token 隔离、有界崩溃恢复、到期清理。
+- Task 1.4：匿名 HttpOnly 会话、原子幂等创建、查询/取消/失败项重试、单调事件 ID 与 Last-Event-ID 续传。GET 是最终状态来源。
+- Checkpoint A：可操作的响应式任务表单、逐项进度、部分失败、取消、重试和刷新恢复。fixture 显式标记为演示；没有伪造真实教学结果。
+- 安全边界：参数化 SQL、会话哈希与所有权校验、同源写入、JSON body 字节上限、结构化公开错误、日志不输出原文或凭据；本地数据库端口仅绑定回环地址。
 
 ## 当前验证
 
@@ -18,10 +22,21 @@
 
 - `pnpm lint`
 - `pnpm typecheck`
-- `pnpm test`（63 条测试）
+- `pnpm test`（71 条单元测试）
+- `pnpm test:integration`（11 条真实 PostgreSQL/Redis 测试；事务回滚、并发幂等、重复投递、租约恢复、迟到结果、取消、失败项重试、会话隔离、SSE 续传与到期清理）
 - `pnpm build`
 - `pnpm --filter @english-teacher/contracts check:generated`
 - `pnpm audit --audit-level high --registry https://registry.npmjs.org`（无已知漏洞）
+
+浏览器人工验证：正常批次完成、部分失败、只重试失败项、刷新恢复、排队取消、Worker 停止后排队并在重启后完成；390×844 视口无横向溢出，表单与结果可读，浏览器控制台无错误。回归测试验证重试条目不继承旧错误，并能正常转为 SUCCEEDED；客户端响应不确定时保留幂等键，确认收到任务后才清除。
+
+本机使用 Node 22.20.0 完成验证；生产基线仍为 Node 24.20.0，不能将此次结果冒充 Node 24 或生产环境验收。本轮为手动真实浏览器验收，尚未加入自动化浏览器 E2E/CI，也未完成压力测试。
+
+## 本地运行与数据
+
+Docker Desktop 残留 socket 错误已通过备份运行时目录恢复，未删除镜像、数据库或命名卷。PostgreSQL/Redis 健康检查通过，迁移可重复执行。启动步骤与排障见 [本地开发](LOCAL_DEVELOPMENT.md)。
+
+匿名任务本地默认保留 7 天，可配置为 1–30 天；这是开发默认值，不代表生产合规决策。fixture 固定失败标记为 `fixture:fail`，默认禁用处理器返回 `NOT_ENABLED`。
 
 ## 临时实施假设
 
@@ -37,10 +52,10 @@
 - Task 0.1：目标用户、首发地区/数据驻留、匿名数据保留期、预算和评分定位尚未正式批准。
 - Task 0.2：需要至少两个合法双语词典候选、授权条款和 100 词条样本。
 - Task 0.3：需要至少两个模型供应商的凭据、目标地区可用性和预算，才能完成真实质量/成本 Spike。
-- Task 1.3/1.4：PostgreSQL、Redis/队列的本地与部署策略尚未选定；在此之前不以进程内存储冒充可靠任务系统。
+- 生产部署：本地数据库/队列方案已实现；生产限流与预算、端到端 trace/指标告警、严格 nonce CSP、TLS、备份恢复、负载/隐私/可访问性专项验收仍待完成。当前不是生产可发布版本。
 
 ## 下一实施顺序
 
 1. 确认 Task 0.1 的产品与合规决策。
-2. 在 PostgreSQL/队列方案确认后实现 Task 1.3 与 Task 1.4。
-3. 并行完成词典与模型 Spike，再进入单词查询、例句和句子评改纵向切片。
+2. 完成词典授权和 100 词条 Spike，再进入真实单词查询切片。
+3. 获得获批模型供应商凭据与预算，完成真实质量/成本 Spike，再进入模型网关、例句和句子评改切片；凭据不提交 Git。
