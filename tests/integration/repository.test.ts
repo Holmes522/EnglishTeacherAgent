@@ -166,6 +166,10 @@ describe("PostgreSQL task repository", () => {
     );
     const retry = await repository.retry(owner, run.runId, randomUUID());
     expect(retry.items.map((item) => item.originalText)).toEqual(["hello"]);
+    expect(retry.items[0]?.error).toBeUndefined();
+    const retried = await repository.claim(retry.items[0]!.itemId);
+    expect(await repository.finish(retried!.item.itemId, retried!.token, { result })).toBe(true);
+    expect((await repository.get(owner, retry.runId))?.status).toBe("SUCCEEDED");
     expect((await repository.get(owner, run.runId))?.status).toBe(
       "PARTIAL_SUCCESS",
     );

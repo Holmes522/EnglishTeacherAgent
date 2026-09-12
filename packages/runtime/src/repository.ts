@@ -184,7 +184,10 @@ export class RunRepository {
     ).rows[0]!;
     for (const [position, seed] of seeds.entries()) {
       const item = learningItemSchema.parse({
-        ...seed,
+        originalText: seed.originalText,
+        normalizedText: seed.normalizedText,
+        detectedKind: seed.detectedKind,
+        detectedLanguage: seed.detectedLanguage,
         schemaVersion: 1,
         itemId: `li_${randomUUID()}`,
         position,
