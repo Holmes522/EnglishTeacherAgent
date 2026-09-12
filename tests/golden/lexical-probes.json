@@ -1,0 +1,162 @@
+{
+  "schemaVersion": 1,
+  "status": "UNMEASURED",
+  "description": "Project-authored query probes, not dictionary answers. Probe map keys are permanent IDs; preserve them when editing or reordering. Only coverageExclusions are excluded from valid-input coverage.",
+  "groups": [
+    {
+      "id": "common",
+      "probes": {
+        "common-001": "apple",
+        "common-002": "book",
+        "common-003": "water",
+        "common-004": "school",
+        "common-005": "teacher",
+        "common-006": "student",
+        "common-007": "family",
+        "common-008": "friend",
+        "common-009": "work",
+        "common-010": "time"
+      }
+    },
+    {
+      "id": "polysemy",
+      "probes": {
+        "polysemy-001": "bank",
+        "polysemy-002": "light",
+        "polysemy-003": "right",
+        "polysemy-004": "run",
+        "polysemy-005": "set",
+        "polysemy-006": "get",
+        "polysemy-007": "take",
+        "polysemy-008": "fine",
+        "polysemy-009": "match",
+        "polysemy-010": "spring"
+      }
+    },
+    {
+      "id": "verb-forms",
+      "probes": {
+        "verb-forms-001": "go",
+        "verb-forms-002": "went",
+        "verb-forms-003": "gone",
+        "verb-forms-004": "eat",
+        "verb-forms-005": "ate",
+        "verb-forms-006": "eaten",
+        "verb-forms-007": "write",
+        "verb-forms-008": "wrote",
+        "verb-forms-009": "written",
+        "verb-forms-010": "bought"
+      }
+    },
+    {
+      "id": "irregular-forms",
+      "probes": {
+        "irregular-forms-001": "children",
+        "irregular-forms-002": "mice",
+        "irregular-forms-003": "feet",
+        "irregular-forms-004": "teeth",
+        "irregular-forms-005": "geese",
+        "irregular-forms-006": "sheep",
+        "irregular-forms-007": "women",
+        "irregular-forms-008": "men",
+        "irregular-forms-009": "better",
+        "irregular-forms-010": "best"
+      }
+    },
+    {
+      "id": "function",
+      "probes": {
+        "function-001": "a",
+        "function-002": "an",
+        "function-003": "the",
+        "function-004": "some",
+        "function-005": "any",
+        "function-006": "much",
+        "function-007": "many",
+        "function-008": "few",
+        "function-009": "little",
+        "function-010": "enough"
+      }
+    },
+    {
+      "id": "derivation",
+      "probes": {
+        "derivation-001": "happiness",
+        "derivation-002": "unhappy",
+        "derivation-003": "happily",
+        "derivation-004": "kindness",
+        "derivation-005": "unkind",
+        "derivation-006": "useful",
+        "derivation-007": "useless",
+        "derivation-008": "movement",
+        "derivation-009": "development",
+        "derivation-010": "agreement"
+      }
+    },
+    {
+      "id": "variants",
+      "probes": {
+        "variants-001": "colour",
+        "variants-002": "color",
+        "variants-003": "centre",
+        "variants-004": "center",
+        "variants-005": "organise",
+        "variants-006": "organize",
+        "variants-007": "travelling",
+        "variants-008": "traveling",
+        "variants-009": "learnt",
+        "variants-010": "learned"
+      }
+    },
+    {
+      "id": "phrases",
+      "probes": {
+        "phrases-001": "look up",
+        "phrases-002": "give up",
+        "phrases-003": "take off",
+        "phrases-004": "put up with",
+        "phrases-005": "look forward to",
+        "phrases-006": "in spite of",
+        "phrases-007": "ice cream",
+        "phrases-008": "mother-in-law",
+        "phrases-009": "well-being",
+        "phrases-010": "state-of-the-art"
+      }
+    },
+    {
+      "id": "domains",
+      "probes": {
+        "domains-001": "algorithm",
+        "domains-002": "database",
+        "domains-003": "photosynthesis",
+        "domains-004": "ecosystem",
+        "domains-005": "inflation",
+        "domains-006": "mortgage",
+        "domains-007": "democracy",
+        "domains-008": "hypothesis",
+        "domains-009": "molecule",
+        "domains-010": "quantum"
+      }
+    },
+    {
+      "id": "boundary",
+      "probes": {
+        "boundary-001": "Hello",
+        "boundary-002": "Ｈｅｌｌｏ",
+        "boundary-003": "café",
+        "boundary-004": "naïve",
+        "boundary-005": "resume",
+        "boundary-006": "résumé",
+        "boundary-007": "floccinaucinihilipilification",
+        "boundary-008": "qzxvblorp123",
+        "boundary-009": "recieive",
+        "boundary-010": "teh"
+      }
+    }
+  ],
+  "coverageExclusions": {
+    "boundary-008": "Synthetic out-of-vocabulary input; inspect not-found behavior.",
+    "boundary-009": "Misspelling of receive; inspect suggestions without silent correction.",
+    "boundary-010": "Misspelling of the; inspect suggestions without silent correction."
+  }
+}
