@@ -1,26 +1,38 @@
-export default function HomePage() {
+import { Composer } from "./composer";
+
+export const dynamic = "force-dynamic";
+export default async function HomePage({
+  searchParams,
+}: {
+  searchParams: Promise<{ run?: string }>;
+}) {
+  const { run } = await searchParams;
   return (
     <main className="shell">
       <section className="intro" aria-labelledby="page-title">
         <p className="eyebrow">English Teacher AI Agent</p>
         <h1 id="page-title">把英语问题讲清楚，也把依据说清楚。</h1>
         <p className="lede">
-          项目基础架构已经就绪。单词释义、例句、句子评改和批量学习流程将按文档中的纵向切片逐步接入。
+          从一个单词、一句话开始。批量提交，逐项查看处理进度。
         </p>
         <dl className="status-list">
           <div>
             <dt>当前阶段</dt>
-            <dd>基础与契约</dd>
+            <dd>异步学习任务演示</dd>
           </div>
           <div>
-            <dt>事实来源</dt>
-            <dd>版本化词典端口</dd>
+            <dt>输入方式</dt>
+            <dd>单词 · 句子 · 混合批量</dd>
           </div>
           <div>
-            <dt>生成能力</dt>
-            <dd>可替换模型网关</dd>
+            <dt>学习语言</dt>
+            <dd>英语，中文说明</dd>
           </div>
         </dl>
+        <Composer
+          demo={process.env.PROCESSOR_MODE === "fixture"}
+          initialRunId={run}
+        />
       </section>
     </main>
   );
