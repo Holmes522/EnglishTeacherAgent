@@ -8,6 +8,7 @@
 
 ## 文档导航
 
+- [AI Agent 接手指南](docs/AGENT_HANDOFF.md)：当前研发断点、已确认决策、代码导航、验证与下一步；Agent 从根目录 [AGENTS.md](AGENTS.md) 开始
 - [能力地图](docs/CAPABILITY_MAP.md)：模块边界、依赖方向和建议建设顺序
 - [产品需求文档（PRD）](docs/PRD.md)：用户、范围、功能、验收、指标与分期
 - [技术设计文档](docs/TECHNICAL_DESIGN.md)：架构、数据契约、API、模型/语音/多语言/插件预留与测试方案

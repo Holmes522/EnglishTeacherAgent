@@ -1,7 +1,8 @@
 # 实施状态
 
 - 更新日期：2026-09-13
-- 交付分支：`main`（由 `codex/learning-run-pipeline` 快进合并）
+- 交付分支：`main`（基础链路与离线 FreeDict 评测已合并；功能/评测基线 `e52ffbd`）
+- 新会话接手入口：[AI Agent 研发接手指南](AGENT_HANDOFF.md)。新增指南不改变任务完成度。
 - 产品/架构文档整体仍为 Draft/Proposed；ADR-005 的本地运行方案已获确认，不代表生产部署获批。
 
 ## 已完成
