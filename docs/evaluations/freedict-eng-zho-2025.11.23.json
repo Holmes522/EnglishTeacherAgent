@@ -1,0 +1,1683 @@
+{
+  "schemaVersion": 1,
+  "evaluation": "STRUCTURAL_COVERAGE_ONLY",
+  "dictionaryVersion": "2025.11.23",
+  "declaredLicenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/legalcode",
+  "dictionaryEntryCount": 26660,
+  "normalizedHeadwordCount": 24786,
+  "summary": {
+    "probeCount": 100,
+    "validInputCount": 97,
+    "headwordHits": 73,
+    "translationHits": 73,
+    "translationHitPercent": 75.26,
+    "ambiguousProbes": 29,
+    "probesWithSourceIds": 0
+  },
+  "groups": [
+    {
+      "group": "boundary",
+      "probeCount": 10,
+      "validInputCount": 7,
+      "translationHits": 4
+    },
+    {
+      "group": "common",
+      "probeCount": 10,
+      "validInputCount": 10,
+      "translationHits": 10
+    },
+    {
+      "group": "derivation",
+      "probeCount": 10,
+      "validInputCount": 10,
+      "translationHits": 8
+    },
+    {
+      "group": "domains",
+      "probeCount": 10,
+      "validInputCount": 10,
+      "translationHits": 10
+    },
+    {
+      "group": "function",
+      "probeCount": 10,
+      "validInputCount": 10,
+      "translationHits": 10
+    },
+    {
+      "group": "irregular-forms",
+      "probeCount": 10,
+      "validInputCount": 10,
+      "translationHits": 4
+    },
+    {
+      "group": "phrases",
+      "probeCount": 10,
+      "validInputCount": 10,
+      "translationHits": 8
+    },
+    {
+      "group": "polysemy",
+      "probeCount": 10,
+      "validInputCount": 10,
+      "translationHits": 10
+    },
+    {
+      "group": "variants",
+      "probeCount": 10,
+      "validInputCount": 10,
+      "translationHits": 5
+    },
+    {
+      "group": "verb-forms",
+      "probeCount": 10,
+      "validInputCount": 10,
+      "translationHits": 4
+    }
+  ],
+  "observations": [
+    {
+      "probeId": "common-001",
+      "group": "common",
+      "query": "apple",
+      "includeInCoverage": true,
+      "result": {
+        "normalizedQuery": "apple",
+        "status": "TRANSLATION_FOUND",
+        "entryCount": 1,
+        "chineseTranslationCount": 2,
+        "entriesWithPartOfSpeech": 1,
+        "entriesWithPronunciation": 1,
+        "entriesWithSourceId": 0,
+        "ambiguousTranslationGroupCount": 0
+      }
+    },
+    {
+      "probeId": "common-002",
+      "group": "common",
+      "query": "book",
+      "includeInCoverage": true,
+      "result": {
+        "normalizedQuery": "book",
+        "status": "TRANSLATION_FOUND",
+        "entryCount": 1,
+        "chineseTranslationCount": 3,
+        "entriesWithPartOfSpeech": 1,
+        "entriesWithPronunciation": 1,
+        "entriesWithSourceId": 0,
+        "ambiguousTranslationGroupCount": 1
+      }
+    },
+    {
+      "probeId": "common-003",
+      "group": "common",
+      "query": "water",
+      "includeInCoverage": true,
+      "result": {
+        "normalizedQuery": "water",
+        "status": "TRANSLATION_FOUND",
+        "entryCount": 1,
+        "chineseTranslationCount": 1,
+        "entriesWithPartOfSpeech": 1,
+        "entriesWithPronunciation": 1,
+        "entriesWithSourceId": 0,
+        "ambiguousTranslationGroupCount": 1
+      }
+    },
+    {
+      "probeId": "common-004",
+      "group": "common",
+      "query": "school",
+      "includeInCoverage": true,
+      "result": {
+        "normalizedQuery": "school",
+        "status": "TRANSLATION_FOUND",
+        "entryCount": 1,
+        "chineseTranslationCount": 1,
+        "entriesWithPartOfSpeech": 1,
+        "entriesWithPronunciation": 1,
+        "entriesWithSourceId": 0,
+        "ambiguousTranslationGroupCount": 1
+      }
+    },
+    {
+      "probeId": "common-005",
+      "group": "common",
+      "query": "teacher",
+      "includeInCoverage": true,
+      "result": {
+        "normalizedQuery": "teacher",
+        "status": "TRANSLATION_FOUND",
+        "entryCount": 1,
+        "chineseTranslationCount": 2,
+        "entriesWithPartOfSpeech": 1,
+        "entriesWithPronunciation": 1,
+        "entriesWithSourceId": 0,
+        "ambiguousTranslationGroupCount": 0
+      }
+    },
+    {
+      "probeId": "common-006",
+      "group": "common",
+      "query": "student",
+      "includeInCoverage": true,
+      "result": {
+        "normalizedQuery": "student",
+        "status": "TRANSLATION_FOUND",
+        "entryCount": 1,
+        "chineseTranslationCount": 2,
+        "entriesWithPartOfSpeech": 1,
+        "entriesWithPronunciation": 1,
+        "entriesWithSourceId": 0,
+        "ambiguousTranslationGroupCount": 1
+      }
+    },
+    {
+      "probeId": "common-007",
+      "group": "common",
+      "query": "family",
+      "includeInCoverage": true,
+      "result": {
+        "normalizedQuery": "family",
+        "status": "TRANSLATION_FOUND",
+        "entryCount": 1,
+        "chineseTranslationCount": 3,
+        "entriesWithPartOfSpeech": 1,
+        "entriesWithPronunciation": 1,
+        "entriesWithSourceId": 0,
+        "ambiguousTranslationGroupCount": 1
+      }
+    },
+    {
+      "probeId": "common-008",
+      "group": "common",
+      "query": "friend",
+      "includeInCoverage": true,
+      "result": {
+        "normalizedQuery": "friend",
+        "status": "TRANSLATION_FOUND",
+        "entryCount": 1,
+        "chineseTranslationCount": 1,
+        "entriesWithPartOfSpeech": 1,
+        "entriesWithPronunciation": 1,
+        "entriesWithSourceId": 0,
+        "ambiguousTranslationGroupCount": 1
+      }
+    },
+    {
+      "probeId": "common-009",
+      "group": "common",
+      "query": "work",
+      "includeInCoverage": true,
+      "result": {
+        "normalizedQuery": "work",
+        "status": "TRANSLATION_FOUND",
+        "entryCount": 2,
+        "chineseTranslationCount": 2,
+        "entriesWithPartOfSpeech": 2,
+        "entriesWithPronunciation": 2,
+        "entriesWithSourceId": 0,
+        "ambiguousTranslationGroupCount": 2
+      }
+    },
+    {
+      "probeId": "common-010",
+      "group": "common",
+      "query": "time",
+      "includeInCoverage": true,
+      "result": {
+        "normalizedQuery": "time",
+        "status": "TRANSLATION_FOUND",
+        "entryCount": 1,
+        "chineseTranslationCount": 5,
+        "entriesWithPartOfSpeech": 1,
+        "entriesWithPronunciation": 1,
+        "entriesWithSourceId": 0,
+        "ambiguousTranslationGroupCount": 0
+      }
+    },
+    {
+      "probeId": "polysemy-001",
+      "group": "polysemy",
+      "query": "bank",
+      "includeInCoverage": true,
+      "result": {
+        "normalizedQuery": "bank",
+        "status": "TRANSLATION_FOUND",
+        "entryCount": 1,
+        "chineseTranslationCount": 3,
+        "entriesWithPartOfSpeech": 1,
+        "entriesWithPronunciation": 1,
+        "entriesWithSourceId": 0,
+        "ambiguousTranslationGroupCount": 1
+      }
+    },
+    {
+      "probeId": "polysemy-002",
+      "group": "polysemy",
+      "query": "light",
+      "includeInCoverage": true,
+      "result": {
+        "normalizedQuery": "light",
+        "status": "TRANSLATION_FOUND",
+        "entryCount": 2,
+        "chineseTranslationCount": 3,
+        "entriesWithPartOfSpeech": 2,
+        "entriesWithPronunciation": 2,
+        "entriesWithSourceId": 0,
+        "ambiguousTranslationGroupCount": 2
+      }
+    },
+    {
+      "probeId": "polysemy-003",
+      "group": "polysemy",
+      "query": "right",
+      "includeInCoverage": true,
+      "result": {
+        "normalizedQuery": "right",
+        "status": "TRANSLATION_FOUND",
+        "entryCount": 2,
+        "chineseTranslationCount": 2,
+        "entriesWithPartOfSpeech": 2,
+        "entriesWithPronunciation": 2,
+        "entriesWithSourceId": 0,
+        "ambiguousTranslationGroupCount": 1
+      }
+    },
+    {
+      "probeId": "polysemy-004",
+      "group": "polysemy",
+      "query": "run",
+      "includeInCoverage": true,
+      "result": {
+        "normalizedQuery": "run",
+        "status": "TRANSLATION_FOUND",
+        "entryCount": 2,
+        "chineseTranslationCount": 2,
+        "entriesWithPartOfSpeech": 2,
+        "entriesWithPronunciation": 2,
+        "entriesWithSourceId": 0,
+        "ambiguousTranslationGroupCount": 1
+      }
+    },
+    {
+      "probeId": "polysemy-005",
+      "group": "polysemy",
+      "query": "set",
+      "includeInCoverage": true,
+      "result": {
+        "normalizedQuery": "set",
+        "status": "TRANSLATION_FOUND",
+        "entryCount": 4,
+        "chineseTranslationCount": 17,
+        "entriesWithPartOfSpeech": 4,
+        "entriesWithPronunciation": 4,
+        "entriesWithSourceId": 0,
+        "ambiguousTranslationGroupCount": 2
+      }
+    },
+    {
+      "probeId": "polysemy-006",
+      "group": "polysemy",
+      "query": "get",
+      "includeInCoverage": true,
+      "result": {
+        "normalizedQuery": "get",
+        "status": "TRANSLATION_FOUND",
+        "entryCount": 1,
+        "chineseTranslationCount": 5,
+        "entriesWithPartOfSpeech": 1,
+        "entriesWithPronunciation": 1,
+        "entriesWithSourceId": 0,
+        "ambiguousTranslationGroupCount": 2
+      }
+    },
+    {
+      "probeId": "polysemy-007",
+      "group": "polysemy",
+      "query": "take",
+      "includeInCoverage": true,
+      "result": {
+        "normalizedQuery": "take",
+        "status": "TRANSLATION_FOUND",
+        "entryCount": 1,
+        "chineseTranslationCount": 1,
+        "entriesWithPartOfSpeech": 1,
+        "entriesWithPronunciation": 1,
+        "entriesWithSourceId": 0,
+        "ambiguousTranslationGroupCount": 1
+      }
+    },
+    {
+      "probeId": "polysemy-008",
+      "group": "polysemy",
+      "query": "fine",
+      "includeInCoverage": true,
+      "result": {
+        "normalizedQuery": "fine",
+        "status": "TRANSLATION_FOUND",
+        "entryCount": 4,
+        "chineseTranslationCount": 7,
+        "entriesWithPartOfSpeech": 4,
+        "entriesWithPronunciation": 4,
+        "entriesWithSourceId": 0,
+        "ambiguousTranslationGroupCount": 0
+      }
+    },
+    {
+      "probeId": "polysemy-009",
+      "group": "polysemy",
+      "query": "match",
+      "includeInCoverage": true,
+      "result": {
+        "normalizedQuery": "match",
+        "status": "TRANSLATION_FOUND",
+        "entryCount": 1,
+        "chineseTranslationCount": 1,
+        "entriesWithPartOfSpeech": 1,
+        "entriesWithPronunciation": 1,
+        "entriesWithSourceId": 0,
+        "ambiguousTranslationGroupCount": 0
+      }
+    },
+    {
+      "probeId": "polysemy-010",
+      "group": "polysemy",
+      "query": "spring",
+      "includeInCoverage": true,
+      "result": {
+        "normalizedQuery": "spring",
+        "status": "TRANSLATION_FOUND",
+        "entryCount": 1,
+        "chineseTranslationCount": 4,
+        "entriesWithPartOfSpeech": 1,
+        "entriesWithPronunciation": 1,
+        "entriesWithSourceId": 0,
+        "ambiguousTranslationGroupCount": 0
+      }
+    },
+    {
+      "probeId": "verb-forms-001",
+      "group": "verb-forms",
+      "query": "go",
+      "includeInCoverage": true,
+      "result": {
+        "normalizedQuery": "go",
+        "status": "TRANSLATION_FOUND",
+        "entryCount": 2,
+        "chineseTranslationCount": 3,
+        "entriesWithPartOfSpeech": 2,
+        "entriesWithPronunciation": 2,
+        "entriesWithSourceId": 0,
+        "ambiguousTranslationGroupCount": 1
+      }
+    },
+    {
+      "probeId": "verb-forms-002",
+      "group": "verb-forms",
+      "query": "went",
+      "includeInCoverage": true,
+      "result": {
+        "normalizedQuery": "went",
+        "status": "NOT_FOUND",
+        "entryCount": 0,
+        "chineseTranslationCount": 0,
+        "entriesWithPartOfSpeech": 0,
+        "entriesWithPronunciation": 0,
+        "entriesWithSourceId": 0,
+        "ambiguousTranslationGroupCount": 0
+      }
+    },
+    {
+      "probeId": "verb-forms-003",
+      "group": "verb-forms",
+      "query": "gone",
+      "includeInCoverage": true,
+      "result": {
+        "normalizedQuery": "gone",
+        "status": "TRANSLATION_FOUND",
+        "entryCount": 1,
+        "chineseTranslationCount": 1,
+        "entriesWithPartOfSpeech": 1,
+        "entriesWithPronunciation": 1,
+        "entriesWithSourceId": 0,
+        "ambiguousTranslationGroupCount": 0
+      }
+    },
+    {
+      "probeId": "verb-forms-004",
+      "group": "verb-forms",
+      "query": "eat",
+      "includeInCoverage": true,
+      "result": {
+        "normalizedQuery": "eat",
+        "status": "TRANSLATION_FOUND",
+        "entryCount": 1,
+        "chineseTranslationCount": 2,
+        "entriesWithPartOfSpeech": 1,
+        "entriesWithPronunciation": 1,
+        "entriesWithSourceId": 0,
+        "ambiguousTranslationGroupCount": 1
+      }
+    },
+    {
+      "probeId": "verb-forms-005",
+      "group": "verb-forms",
+      "query": "ate",
+      "includeInCoverage": true,
+      "result": {
+        "normalizedQuery": "ate",
+        "status": "NOT_FOUND",
+        "entryCount": 0,
+        "chineseTranslationCount": 0,
+        "entriesWithPartOfSpeech": 0,
+        "entriesWithPronunciation": 0,
+        "entriesWithSourceId": 0,
+        "ambiguousTranslationGroupCount": 0
+      }
+    },
+    {
+      "probeId": "verb-forms-006",
+      "group": "verb-forms",
+      "query": "eaten",
+      "includeInCoverage": true,
+      "result": {
+        "normalizedQuery": "eaten",
+        "status": "NOT_FOUND",
+        "entryCount": 0,
+        "chineseTranslationCount": 0,
+        "entriesWithPartOfSpeech": 0,
+        "entriesWithPronunciation": 0,
+        "entriesWithSourceId": 0,
+        "ambiguousTranslationGroupCount": 0
+      }
+    },
+    {
+      "probeId": "verb-forms-007",
+      "group": "verb-forms",
+      "query": "write",
+      "includeInCoverage": true,
+      "result": {
+        "normalizedQuery": "write",
+        "status": "TRANSLATION_FOUND",
+        "entryCount": 1,
+        "chineseTranslationCount": 3,
+        "entriesWithPartOfSpeech": 1,
+        "entriesWithPronunciation": 1,
+        "entriesWithSourceId": 0,
+        "ambiguousTranslationGroupCount": 1
+      }
+    },
+    {
+      "probeId": "verb-forms-008",
+      "group": "verb-forms",
+      "query": "wrote",
+      "includeInCoverage": true,
+      "result": {
+        "normalizedQuery": "wrote",
+        "status": "NOT_FOUND",
+        "entryCount": 0,
+        "chineseTranslationCount": 0,
+        "entriesWithPartOfSpeech": 0,
+        "entriesWithPronunciation": 0,
+        "entriesWithSourceId": 0,
+        "ambiguousTranslationGroupCount": 0
+      }
+    },
+    {
+      "probeId": "verb-forms-009",
+      "group": "verb-forms",
+      "query": "written",
+      "includeInCoverage": true,
+      "result": {
+        "normalizedQuery": "written",
+        "status": "NOT_FOUND",
+        "entryCount": 0,
+        "chineseTranslationCount": 0,
+        "entriesWithPartOfSpeech": 0,
+        "entriesWithPronunciation": 0,
+        "entriesWithSourceId": 0,
+        "ambiguousTranslationGroupCount": 0
+      }
+    },
+    {
+      "probeId": "verb-forms-010",
+      "group": "verb-forms",
+      "query": "bought",
+      "includeInCoverage": true,
+      "result": {
+        "normalizedQuery": "bought",
+        "status": "NOT_FOUND",
+        "entryCount": 0,
+        "chineseTranslationCount": 0,
+        "entriesWithPartOfSpeech": 0,
+        "entriesWithPronunciation": 0,
+        "entriesWithSourceId": 0,
+        "ambiguousTranslationGroupCount": 0
+      }
+    },
+    {
+      "probeId": "irregular-forms-001",
+      "group": "irregular-forms",
+      "query": "children",
+      "includeInCoverage": true,
+      "result": {
+        "normalizedQuery": "children",
+        "status": "NOT_FOUND",
+        "entryCount": 0,
+        "chineseTranslationCount": 0,
+        "entriesWithPartOfSpeech": 0,
+        "entriesWithPronunciation": 0,
+        "entriesWithSourceId": 0,
+        "ambiguousTranslationGroupCount": 0
+      }
+    },
+    {
+      "probeId": "irregular-forms-002",
+      "group": "irregular-forms",
+      "query": "mice",
+      "includeInCoverage": true,
+      "result": {
+        "normalizedQuery": "mice",
+        "status": "NOT_FOUND",
+        "entryCount": 0,
+        "chineseTranslationCount": 0,
+        "entriesWithPartOfSpeech": 0,
+        "entriesWithPronunciation": 0,
+        "entriesWithSourceId": 0,
+        "ambiguousTranslationGroupCount": 0
+      }
+    },
+    {
+      "probeId": "irregular-forms-003",
+      "group": "irregular-forms",
+      "query": "feet",
+      "includeInCoverage": true,
+      "result": {
+        "normalizedQuery": "feet",
+        "status": "NOT_FOUND",
+        "entryCount": 0,
+        "chineseTranslationCount": 0,
+        "entriesWithPartOfSpeech": 0,
+        "entriesWithPronunciation": 0,
+        "entriesWithSourceId": 0,
+        "ambiguousTranslationGroupCount": 0
+      }
+    },
+    {
+      "probeId": "irregular-forms-004",
+      "group": "irregular-forms",
+      "query": "teeth",
+      "includeInCoverage": true,
+      "result": {
+        "normalizedQuery": "teeth",
+        "status": "NOT_FOUND",
+        "entryCount": 0,
+        "chineseTranslationCount": 0,
+        "entriesWithPartOfSpeech": 0,
+        "entriesWithPronunciation": 0,
+        "entriesWithSourceId": 0,
+        "ambiguousTranslationGroupCount": 0
+      }
+    },
+    {
+      "probeId": "irregular-forms-005",
+      "group": "irregular-forms",
+      "query": "geese",
+      "includeInCoverage": true,
+      "result": {
+        "normalizedQuery": "geese",
+        "status": "NOT_FOUND",
+        "entryCount": 0,
+        "chineseTranslationCount": 0,
+        "entriesWithPartOfSpeech": 0,
+        "entriesWithPronunciation": 0,
+        "entriesWithSourceId": 0,
+        "ambiguousTranslationGroupCount": 0
+      }
+    },
+    {
+      "probeId": "irregular-forms-006",
+      "group": "irregular-forms",
+      "query": "sheep",
+      "includeInCoverage": true,
+      "result": {
+        "normalizedQuery": "sheep",
+        "status": "TRANSLATION_FOUND",
+        "entryCount": 1,
+        "chineseTranslationCount": 3,
+        "entriesWithPartOfSpeech": 1,
+        "entriesWithPronunciation": 1,
+        "entriesWithSourceId": 0,
+        "ambiguousTranslationGroupCount": 0
+      }
+    },
+    {
+      "probeId": "irregular-forms-007",
+      "group": "irregular-forms",
+      "query": "women",
+      "includeInCoverage": true,
+      "result": {
+        "normalizedQuery": "women",
+        "status": "NOT_FOUND",
+        "entryCount": 0,
+        "chineseTranslationCount": 0,
+        "entriesWithPartOfSpeech": 0,
+        "entriesWithPronunciation": 0,
+        "entriesWithSourceId": 0,
+        "ambiguousTranslationGroupCount": 0
+      }
+    },
+    {
+      "probeId": "irregular-forms-008",
+      "group": "irregular-forms",
+      "query": "men",
+      "includeInCoverage": true,
+      "result": {
+        "normalizedQuery": "men",
+        "status": "TRANSLATION_FOUND",
+        "entryCount": 1,
+        "chineseTranslationCount": 1,
+        "entriesWithPartOfSpeech": 1,
+        "entriesWithPronunciation": 1,
+        "entriesWithSourceId": 0,
+        "ambiguousTranslationGroupCount": 0
+      }
+    },
+    {
+      "probeId": "irregular-forms-009",
+      "group": "irregular-forms",
+      "query": "better",
+      "includeInCoverage": true,
+      "result": {
+        "normalizedQuery": "better",
+        "status": "TRANSLATION_FOUND",
+        "entryCount": 3,
+        "chineseTranslationCount": 3,
+        "entriesWithPartOfSpeech": 3,
+        "entriesWithPronunciation": 3,
+        "entriesWithSourceId": 0,
+        "ambiguousTranslationGroupCount": 0
+      }
+    },
+    {
+      "probeId": "irregular-forms-010",
+      "group": "irregular-forms",
+      "query": "best",
+      "includeInCoverage": true,
+      "result": {
+        "normalizedQuery": "best",
+        "status": "TRANSLATION_FOUND",
+        "entryCount": 2,
+        "chineseTranslationCount": 2,
+        "entriesWithPartOfSpeech": 2,
+        "entriesWithPronunciation": 2,
+        "entriesWithSourceId": 0,
+        "ambiguousTranslationGroupCount": 0
+      }
+    },
+    {
+      "probeId": "function-001",
+      "group": "function",
+      "query": "a",
+      "includeInCoverage": true,
+      "result": {
+        "normalizedQuery": "a",
+        "status": "TRANSLATION_FOUND",
+        "entryCount": 1,
+        "chineseTranslationCount": 1,
+        "entriesWithPartOfSpeech": 1,
+        "entriesWithPronunciation": 1,
+        "entriesWithSourceId": 0,
+        "ambiguousTranslationGroupCount": 0
+      }
+    },
+    {
+      "probeId": "function-002",
+      "group": "function",
+      "query": "an",
+      "includeInCoverage": true,
+      "result": {
+        "normalizedQuery": "an",
+        "status": "TRANSLATION_FOUND",
+        "entryCount": 1,
+        "chineseTranslationCount": 1,
+        "entriesWithPartOfSpeech": 1,
+        "entriesWithPronunciation": 1,
+        "entriesWithSourceId": 0,
+        "ambiguousTranslationGroupCount": 0
+      }
+    },
+    {
+      "probeId": "function-003",
+      "group": "function",
+      "query": "the",
+      "includeInCoverage": true,
+      "result": {
+        "normalizedQuery": "the",
+        "status": "TRANSLATION_FOUND",
+        "entryCount": 1,
+        "chineseTranslationCount": 2,
+        "entriesWithPartOfSpeech": 1,
+        "entriesWithPronunciation": 1,
+        "entriesWithSourceId": 0,
+        "ambiguousTranslationGroupCount": 0
+      }
+    },
+    {
+      "probeId": "function-004",
+      "group": "function",
+      "query": "some",
+      "includeInCoverage": true,
+      "result": {
+        "normalizedQuery": "some",
+        "status": "TRANSLATION_FOUND",
+        "entryCount": 3,
+        "chineseTranslationCount": 6,
+        "entriesWithPartOfSpeech": 3,
+        "entriesWithPronunciation": 3,
+        "entriesWithSourceId": 0,
+        "ambiguousTranslationGroupCount": 2
+      }
+    },
+    {
+      "probeId": "function-005",
+      "group": "function",
+      "query": "any",
+      "includeInCoverage": true,
+      "result": {
+        "normalizedQuery": "any",
+        "status": "TRANSLATION_FOUND",
+        "entryCount": 3,
+        "chineseTranslationCount": 4,
+        "entriesWithPartOfSpeech": 3,
+        "entriesWithPronunciation": 3,
+        "entriesWithSourceId": 0,
+        "ambiguousTranslationGroupCount": 0
+      }
+    },
+    {
+      "probeId": "function-006",
+      "group": "function",
+      "query": "much",
+      "includeInCoverage": true,
+      "result": {
+        "normalizedQuery": "much",
+        "status": "TRANSLATION_FOUND",
+        "entryCount": 2,
+        "chineseTranslationCount": 2,
+        "entriesWithPartOfSpeech": 2,
+        "entriesWithPronunciation": 2,
+        "entriesWithSourceId": 0,
+        "ambiguousTranslationGroupCount": 0
+      }
+    },
+    {
+      "probeId": "function-007",
+      "group": "function",
+      "query": "many",
+      "includeInCoverage": true,
+      "result": {
+        "normalizedQuery": "many",
+        "status": "TRANSLATION_FOUND",
+        "entryCount": 3,
+        "chineseTranslationCount": 3,
+        "entriesWithPartOfSpeech": 3,
+        "entriesWithPronunciation": 3,
+        "entriesWithSourceId": 0,
+        "ambiguousTranslationGroupCount": 0
+      }
+    },
+    {
+      "probeId": "function-008",
+      "group": "function",
+      "query": "few",
+      "includeInCoverage": true,
+      "result": {
+        "normalizedQuery": "few",
+        "status": "TRANSLATION_FOUND",
+        "entryCount": 1,
+        "chineseTranslationCount": 1,
+        "entriesWithPartOfSpeech": 1,
+        "entriesWithPronunciation": 1,
+        "entriesWithSourceId": 0,
+        "ambiguousTranslationGroupCount": 0
+      }
+    },
+    {
+      "probeId": "function-009",
+      "group": "function",
+      "query": "little",
+      "includeInCoverage": true,
+      "result": {
+        "normalizedQuery": "little",
+        "status": "TRANSLATION_FOUND",
+        "entryCount": 3,
+        "chineseTranslationCount": 3,
+        "entriesWithPartOfSpeech": 3,
+        "entriesWithPronunciation": 3,
+        "entriesWithSourceId": 0,
+        "ambiguousTranslationGroupCount": 1
+      }
+    },
+    {
+      "probeId": "function-010",
+      "group": "function",
+      "query": "enough",
+      "includeInCoverage": true,
+      "result": {
+        "normalizedQuery": "enough",
+        "status": "TRANSLATION_FOUND",
+        "entryCount": 3,
+        "chineseTranslationCount": 3,
+        "entriesWithPartOfSpeech": 3,
+        "entriesWithPronunciation": 3,
+        "entriesWithSourceId": 0,
+        "ambiguousTranslationGroupCount": 0
+      }
+    },
+    {
+      "probeId": "derivation-001",
+      "group": "derivation",
+      "query": "happiness",
+      "includeInCoverage": true,
+      "result": {
+        "normalizedQuery": "happiness",
+        "status": "TRANSLATION_FOUND",
+        "entryCount": 1,
+        "chineseTranslationCount": 1,
+        "entriesWithPartOfSpeech": 1,
+        "entriesWithPronunciation": 1,
+        "entriesWithSourceId": 0,
+        "ambiguousTranslationGroupCount": 0
+      }
+    },
+    {
+      "probeId": "derivation-002",
+      "group": "derivation",
+      "query": "unhappy",
+      "includeInCoverage": true,
+      "result": {
+        "normalizedQuery": "unhappy",
+        "status": "TRANSLATION_FOUND",
+        "entryCount": 1,
+        "chineseTranslationCount": 1,
+        "entriesWithPartOfSpeech": 1,
+        "entriesWithPronunciation": 1,
+        "entriesWithSourceId": 0,
+        "ambiguousTranslationGroupCount": 0
+      }
+    },
+    {
+      "probeId": "derivation-003",
+      "group": "derivation",
+      "query": "happily",
+      "includeInCoverage": true,
+      "result": {
+        "normalizedQuery": "happily",
+        "status": "TRANSLATION_FOUND",
+        "entryCount": 1,
+        "chineseTranslationCount": 3,
+        "entriesWithPartOfSpeech": 1,
+        "entriesWithPronunciation": 1,
+        "entriesWithSourceId": 0,
+        "ambiguousTranslationGroupCount": 0
+      }
+    },
+    {
+      "probeId": "derivation-004",
+      "group": "derivation",
+      "query": "kindness",
+      "includeInCoverage": true,
+      "result": {
+        "normalizedQuery": "kindness",
+        "status": "NOT_FOUND",
+        "entryCount": 0,
+        "chineseTranslationCount": 0,
+        "entriesWithPartOfSpeech": 0,
+        "entriesWithPronunciation": 0,
+        "entriesWithSourceId": 0,
+        "ambiguousTranslationGroupCount": 0
+      }
+    },
+    {
+      "probeId": "derivation-005",
+      "group": "derivation",
+      "query": "unkind",
+      "includeInCoverage": true,
+      "result": {
+        "normalizedQuery": "unkind",
+        "status": "NOT_FOUND",
+        "entryCount": 0,
+        "chineseTranslationCount": 0,
+        "entriesWithPartOfSpeech": 0,
+        "entriesWithPronunciation": 0,
+        "entriesWithSourceId": 0,
+        "ambiguousTranslationGroupCount": 0
+      }
+    },
+    {
+      "probeId": "derivation-006",
+      "group": "derivation",
+      "query": "useful",
+      "includeInCoverage": true,
+      "result": {
+        "normalizedQuery": "useful",
+        "status": "TRANSLATION_FOUND",
+        "entryCount": 1,
+        "chineseTranslationCount": 1,
+        "entriesWithPartOfSpeech": 1,
+        "entriesWithPronunciation": 1,
+        "entriesWithSourceId": 0,
+        "ambiguousTranslationGroupCount": 0
+      }
+    },
+    {
+      "probeId": "derivation-007",
+      "group": "derivation",
+      "query": "useless",
+      "includeInCoverage": true,
+      "result": {
+        "normalizedQuery": "useless",
+        "status": "TRANSLATION_FOUND",
+        "entryCount": 1,
+        "chineseTranslationCount": 2,
+        "entriesWithPartOfSpeech": 1,
+        "entriesWithPronunciation": 1,
+        "entriesWithSourceId": 0,
+        "ambiguousTranslationGroupCount": 1
+      }
+    },
+    {
+      "probeId": "derivation-008",
+      "group": "derivation",
+      "query": "movement",
+      "includeInCoverage": true,
+      "result": {
+        "normalizedQuery": "movement",
+        "status": "TRANSLATION_FOUND",
+        "entryCount": 1,
+        "chineseTranslationCount": 1,
+        "entriesWithPartOfSpeech": 1,
+        "entriesWithPronunciation": 1,
+        "entriesWithSourceId": 0,
+        "ambiguousTranslationGroupCount": 1
+      }
+    },
+    {
+      "probeId": "derivation-009",
+      "group": "derivation",
+      "query": "development",
+      "includeInCoverage": true,
+      "result": {
+        "normalizedQuery": "development",
+        "status": "TRANSLATION_FOUND",
+        "entryCount": 1,
+        "chineseTranslationCount": 1,
+        "entriesWithPartOfSpeech": 1,
+        "entriesWithPronunciation": 1,
+        "entriesWithSourceId": 0,
+        "ambiguousTranslationGroupCount": 0
+      }
+    },
+    {
+      "probeId": "derivation-010",
+      "group": "derivation",
+      "query": "agreement",
+      "includeInCoverage": true,
+      "result": {
+        "normalizedQuery": "agreement",
+        "status": "TRANSLATION_FOUND",
+        "entryCount": 1,
+        "chineseTranslationCount": 3,
+        "entriesWithPartOfSpeech": 1,
+        "entriesWithPronunciation": 1,
+        "entriesWithSourceId": 0,
+        "ambiguousTranslationGroupCount": 2
+      }
+    },
+    {
+      "probeId": "variants-001",
+      "group": "variants",
+      "query": "colour",
+      "includeInCoverage": true,
+      "result": {
+        "normalizedQuery": "colour",
+        "status": "NOT_FOUND",
+        "entryCount": 0,
+        "chineseTranslationCount": 0,
+        "entriesWithPartOfSpeech": 0,
+        "entriesWithPronunciation": 0,
+        "entriesWithSourceId": 0,
+        "ambiguousTranslationGroupCount": 0
+      }
+    },
+    {
+      "probeId": "variants-002",
+      "group": "variants",
+      "query": "color",
+      "includeInCoverage": true,
+      "result": {
+        "normalizedQuery": "color",
+        "status": "TRANSLATION_FOUND",
+        "entryCount": 3,
+        "chineseTranslationCount": 3,
+        "entriesWithPartOfSpeech": 3,
+        "entriesWithPronunciation": 3,
+        "entriesWithSourceId": 0,
+        "ambiguousTranslationGroupCount": 1
+      }
+    },
+    {
+      "probeId": "variants-003",
+      "group": "variants",
+      "query": "centre",
+      "includeInCoverage": true,
+      "result": {
+        "normalizedQuery": "centre",
+        "status": "NOT_FOUND",
+        "entryCount": 0,
+        "chineseTranslationCount": 0,
+        "entriesWithPartOfSpeech": 0,
+        "entriesWithPronunciation": 0,
+        "entriesWithSourceId": 0,
+        "ambiguousTranslationGroupCount": 0
+      }
+    },
+    {
+      "probeId": "variants-004",
+      "group": "variants",
+      "query": "center",
+      "includeInCoverage": true,
+      "result": {
+        "normalizedQuery": "center",
+        "status": "TRANSLATION_FOUND",
+        "entryCount": 1,
+        "chineseTranslationCount": 1,
+        "entriesWithPartOfSpeech": 1,
+        "entriesWithPronunciation": 1,
+        "entriesWithSourceId": 0,
+        "ambiguousTranslationGroupCount": 1
+      }
+    },
+    {
+      "probeId": "variants-005",
+      "group": "variants",
+      "query": "organise",
+      "includeInCoverage": true,
+      "result": {
+        "normalizedQuery": "organise",
+        "status": "NOT_FOUND",
+        "entryCount": 0,
+        "chineseTranslationCount": 0,
+        "entriesWithPartOfSpeech": 0,
+        "entriesWithPronunciation": 0,
+        "entriesWithSourceId": 0,
+        "ambiguousTranslationGroupCount": 0
+      }
+    },
+    {
+      "probeId": "variants-006",
+      "group": "variants",
+      "query": "organize",
+      "includeInCoverage": true,
+      "result": {
+        "normalizedQuery": "organize",
+        "status": "TRANSLATION_FOUND",
+        "entryCount": 1,
+        "chineseTranslationCount": 1,
+        "entriesWithPartOfSpeech": 1,
+        "entriesWithPronunciation": 1,
+        "entriesWithSourceId": 0,
+        "ambiguousTranslationGroupCount": 0
+      }
+    },
+    {
+      "probeId": "variants-007",
+      "group": "variants",
+      "query": "travelling",
+      "includeInCoverage": true,
+      "result": {
+        "normalizedQuery": "travelling",
+        "status": "NOT_FOUND",
+        "entryCount": 0,
+        "chineseTranslationCount": 0,
+        "entriesWithPartOfSpeech": 0,
+        "entriesWithPronunciation": 0,
+        "entriesWithSourceId": 0,
+        "ambiguousTranslationGroupCount": 0
+      }
+    },
+    {
+      "probeId": "variants-008",
+      "group": "variants",
+      "query": "traveling",
+      "includeInCoverage": true,
+      "result": {
+        "normalizedQuery": "traveling",
+        "status": "TRANSLATION_FOUND",
+        "entryCount": 1,
+        "chineseTranslationCount": 1,
+        "entriesWithPartOfSpeech": 1,
+        "entriesWithPronunciation": 1,
+        "entriesWithSourceId": 0,
+        "ambiguousTranslationGroupCount": 0
+      }
+    },
+    {
+      "probeId": "variants-009",
+      "group": "variants",
+      "query": "learnt",
+      "includeInCoverage": true,
+      "result": {
+        "normalizedQuery": "learnt",
+        "status": "NOT_FOUND",
+        "entryCount": 0,
+        "chineseTranslationCount": 0,
+        "entriesWithPartOfSpeech": 0,
+        "entriesWithPronunciation": 0,
+        "entriesWithSourceId": 0,
+        "ambiguousTranslationGroupCount": 0
+      }
+    },
+    {
+      "probeId": "variants-010",
+      "group": "variants",
+      "query": "learned",
+      "includeInCoverage": true,
+      "result": {
+        "normalizedQuery": "learned",
+        "status": "TRANSLATION_FOUND",
+        "entryCount": 1,
+        "chineseTranslationCount": 1,
+        "entriesWithPartOfSpeech": 1,
+        "entriesWithPronunciation": 1,
+        "entriesWithSourceId": 0,
+        "ambiguousTranslationGroupCount": 0
+      }
+    },
+    {
+      "probeId": "phrases-001",
+      "group": "phrases",
+      "query": "look up",
+      "includeInCoverage": true,
+      "result": {
+        "normalizedQuery": "look up",
+        "status": "TRANSLATION_FOUND",
+        "entryCount": 1,
+        "chineseTranslationCount": 1,
+        "entriesWithPartOfSpeech": 1,
+        "entriesWithPronunciation": 1,
+        "entriesWithSourceId": 0,
+        "ambiguousTranslationGroupCount": 1
+      }
+    },
+    {
+      "probeId": "phrases-002",
+      "group": "phrases",
+      "query": "give up",
+      "includeInCoverage": true,
+      "result": {
+        "normalizedQuery": "give up",
+        "status": "TRANSLATION_FOUND",
+        "entryCount": 1,
+        "chineseTranslationCount": 3,
+        "entriesWithPartOfSpeech": 1,
+        "entriesWithPronunciation": 0,
+        "entriesWithSourceId": 0,
+        "ambiguousTranslationGroupCount": 0
+      }
+    },
+    {
+      "probeId": "phrases-003",
+      "group": "phrases",
+      "query": "take off",
+      "includeInCoverage": true,
+      "result": {
+        "normalizedQuery": "take off",
+        "status": "TRANSLATION_FOUND",
+        "entryCount": 1,
+        "chineseTranslationCount": 1,
+        "entriesWithPartOfSpeech": 1,
+        "entriesWithPronunciation": 0,
+        "entriesWithSourceId": 0,
+        "ambiguousTranslationGroupCount": 0
+      }
+    },
+    {
+      "probeId": "phrases-004",
+      "group": "phrases",
+      "query": "put up with",
+      "includeInCoverage": true,
+      "result": {
+        "normalizedQuery": "put up with",
+        "status": "TRANSLATION_FOUND",
+        "entryCount": 1,
+        "chineseTranslationCount": 1,
+        "entriesWithPartOfSpeech": 1,
+        "entriesWithPronunciation": 0,
+        "entriesWithSourceId": 0,
+        "ambiguousTranslationGroupCount": 0
+      }
+    },
+    {
+      "probeId": "phrases-005",
+      "group": "phrases",
+      "query": "look forward to",
+      "includeInCoverage": true,
+      "result": {
+        "normalizedQuery": "look forward to",
+        "status": "NOT_FOUND",
+        "entryCount": 0,
+        "chineseTranslationCount": 0,
+        "entriesWithPartOfSpeech": 0,
+        "entriesWithPronunciation": 0,
+        "entriesWithSourceId": 0,
+        "ambiguousTranslationGroupCount": 0
+      }
+    },
+    {
+      "probeId": "phrases-006",
+      "group": "phrases",
+      "query": "in spite of",
+      "includeInCoverage": true,
+      "result": {
+        "normalizedQuery": "in spite of",
+        "status": "TRANSLATION_FOUND",
+        "entryCount": 1,
+        "chineseTranslationCount": 1,
+        "entriesWithPartOfSpeech": 1,
+        "entriesWithPronunciation": 0,
+        "entriesWithSourceId": 0,
+        "ambiguousTranslationGroupCount": 0
+      }
+    },
+    {
+      "probeId": "phrases-007",
+      "group": "phrases",
+      "query": "ice cream",
+      "includeInCoverage": true,
+      "result": {
+        "normalizedQuery": "ice cream",
+        "status": "TRANSLATION_FOUND",
+        "entryCount": 1,
+        "chineseTranslationCount": 1,
+        "entriesWithPartOfSpeech": 1,
+        "entriesWithPronunciation": 1,
+        "entriesWithSourceId": 0,
+        "ambiguousTranslationGroupCount": 1
+      }
+    },
+    {
+      "probeId": "phrases-008",
+      "group": "phrases",
+      "query": "mother-in-law",
+      "includeInCoverage": true,
+      "result": {
+        "normalizedQuery": "mother-in-law",
+        "status": "TRANSLATION_FOUND",
+        "entryCount": 1,
+        "chineseTranslationCount": 1,
+        "entriesWithPartOfSpeech": 1,
+        "entriesWithPronunciation": 1,
+        "entriesWithSourceId": 0,
+        "ambiguousTranslationGroupCount": 0
+      }
+    },
+    {
+      "probeId": "phrases-009",
+      "group": "phrases",
+      "query": "well-being",
+      "includeInCoverage": true,
+      "result": {
+        "normalizedQuery": "well-being",
+        "status": "TRANSLATION_FOUND",
+        "entryCount": 1,
+        "chineseTranslationCount": 1,
+        "entriesWithPartOfSpeech": 1,
+        "entriesWithPronunciation": 1,
+        "entriesWithSourceId": 0,
+        "ambiguousTranslationGroupCount": 0
+      }
+    },
+    {
+      "probeId": "phrases-010",
+      "group": "phrases",
+      "query": "state-of-the-art",
+      "includeInCoverage": true,
+      "result": {
+        "normalizedQuery": "state-of-the-art",
+        "status": "NOT_FOUND",
+        "entryCount": 0,
+        "chineseTranslationCount": 0,
+        "entriesWithPartOfSpeech": 0,
+        "entriesWithPronunciation": 0,
+        "entriesWithSourceId": 0,
+        "ambiguousTranslationGroupCount": 0
+      }
+    },
+    {
+      "probeId": "domains-001",
+      "group": "domains",
+      "query": "algorithm",
+      "includeInCoverage": true,
+      "result": {
+        "normalizedQuery": "algorithm",
+        "status": "TRANSLATION_FOUND",
+        "entryCount": 1,
+        "chineseTranslationCount": 1,
+        "entriesWithPartOfSpeech": 1,
+        "entriesWithPronunciation": 1,
+        "entriesWithSourceId": 0,
+        "ambiguousTranslationGroupCount": 1
+      }
+    },
+    {
+      "probeId": "domains-002",
+      "group": "domains",
+      "query": "database",
+      "includeInCoverage": true,
+      "result": {
+        "normalizedQuery": "database",
+        "status": "TRANSLATION_FOUND",
+        "entryCount": 1,
+        "chineseTranslationCount": 1,
+        "entriesWithPartOfSpeech": 1,
+        "entriesWithPronunciation": 1,
+        "entriesWithSourceId": 0,
+        "ambiguousTranslationGroupCount": 1
+      }
+    },
+    {
+      "probeId": "domains-003",
+      "group": "domains",
+      "query": "photosynthesis",
+      "includeInCoverage": true,
+      "result": {
+        "normalizedQuery": "photosynthesis",
+        "status": "TRANSLATION_FOUND",
+        "entryCount": 1,
+        "chineseTranslationCount": 1,
+        "entriesWithPartOfSpeech": 1,
+        "entriesWithPronunciation": 1,
+        "entriesWithSourceId": 0,
+        "ambiguousTranslationGroupCount": 0
+      }
+    },
+    {
+      "probeId": "domains-004",
+      "group": "domains",
+      "query": "ecosystem",
+      "includeInCoverage": true,
+      "result": {
+        "normalizedQuery": "ecosystem",
+        "status": "TRANSLATION_FOUND",
+        "entryCount": 1,
+        "chineseTranslationCount": 1,
+        "entriesWithPartOfSpeech": 1,
+        "entriesWithPronunciation": 1,
+        "entriesWithSourceId": 0,
+        "ambiguousTranslationGroupCount": 0
+      }
+    },
+    {
+      "probeId": "domains-005",
+      "group": "domains",
+      "query": "inflation",
+      "includeInCoverage": true,
+      "result": {
+        "normalizedQuery": "inflation",
+        "status": "TRANSLATION_FOUND",
+        "entryCount": 1,
+        "chineseTranslationCount": 1,
+        "entriesWithPartOfSpeech": 1,
+        "entriesWithPronunciation": 1,
+        "entriesWithSourceId": 0,
+        "ambiguousTranslationGroupCount": 0
+      }
+    },
+    {
+      "probeId": "domains-006",
+      "group": "domains",
+      "query": "mortgage",
+      "includeInCoverage": true,
+      "result": {
+        "normalizedQuery": "mortgage",
+        "status": "TRANSLATION_FOUND",
+        "entryCount": 1,
+        "chineseTranslationCount": 1,
+        "entriesWithPartOfSpeech": 1,
+        "entriesWithPronunciation": 1,
+        "entriesWithSourceId": 0,
+        "ambiguousTranslationGroupCount": 0
+      }
+    },
+    {
+      "probeId": "domains-007",
+      "group": "domains",
+      "query": "democracy",
+      "includeInCoverage": true,
+      "result": {
+        "normalizedQuery": "democracy",
+        "status": "TRANSLATION_FOUND",
+        "entryCount": 1,
+        "chineseTranslationCount": 1,
+        "entriesWithPartOfSpeech": 1,
+        "entriesWithPronunciation": 1,
+        "entriesWithSourceId": 0,
+        "ambiguousTranslationGroupCount": 1
+      }
+    },
+    {
+      "probeId": "domains-008",
+      "group": "domains",
+      "query": "hypothesis",
+      "includeInCoverage": true,
+      "result": {
+        "normalizedQuery": "hypothesis",
+        "status": "TRANSLATION_FOUND",
+        "entryCount": 1,
+        "chineseTranslationCount": 1,
+        "entriesWithPartOfSpeech": 1,
+        "entriesWithPronunciation": 1,
+        "entriesWithSourceId": 0,
+        "ambiguousTranslationGroupCount": 0
+      }
+    },
+    {
+      "probeId": "domains-009",
+      "group": "domains",
+      "query": "molecule",
+      "includeInCoverage": true,
+      "result": {
+        "normalizedQuery": "molecule",
+        "status": "TRANSLATION_FOUND",
+        "entryCount": 1,
+        "chineseTranslationCount": 1,
+        "entriesWithPartOfSpeech": 1,
+        "entriesWithPronunciation": 1,
+        "entriesWithSourceId": 0,
+        "ambiguousTranslationGroupCount": 0
+      }
+    },
+    {
+      "probeId": "domains-010",
+      "group": "domains",
+      "query": "quantum",
+      "includeInCoverage": true,
+      "result": {
+        "normalizedQuery": "quantum",
+        "status": "TRANSLATION_FOUND",
+        "entryCount": 1,
+        "chineseTranslationCount": 1,
+        "entriesWithPartOfSpeech": 1,
+        "entriesWithPronunciation": 1,
+        "entriesWithSourceId": 0,
+        "ambiguousTranslationGroupCount": 0
+      }
+    },
+    {
+      "probeId": "boundary-001",
+      "group": "boundary",
+      "query": "Hello",
+      "includeInCoverage": true,
+      "result": {
+        "normalizedQuery": "hello",
+        "status": "TRANSLATION_FOUND",
+        "entryCount": 1,
+        "chineseTranslationCount": 3,
+        "entriesWithPartOfSpeech": 1,
+        "entriesWithPronunciation": 1,
+        "entriesWithSourceId": 0,
+        "ambiguousTranslationGroupCount": 0
+      }
+    },
+    {
+      "probeId": "boundary-002",
+      "group": "boundary",
+      "query": "Ｈｅｌｌｏ",
+      "includeInCoverage": true,
+      "result": {
+        "normalizedQuery": "hello",
+        "status": "TRANSLATION_FOUND",
+        "entryCount": 1,
+        "chineseTranslationCount": 3,
+        "entriesWithPartOfSpeech": 1,
+        "entriesWithPronunciation": 1,
+        "entriesWithSourceId": 0,
+        "ambiguousTranslationGroupCount": 0
+      }
+    },
+    {
+      "probeId": "boundary-003",
+      "group": "boundary",
+      "query": "café",
+      "includeInCoverage": true,
+      "result": {
+        "normalizedQuery": "café",
+        "status": "TRANSLATION_FOUND",
+        "entryCount": 1,
+        "chineseTranslationCount": 1,
+        "entriesWithPartOfSpeech": 1,
+        "entriesWithPronunciation": 1,
+        "entriesWithSourceId": 0,
+        "ambiguousTranslationGroupCount": 0
+      }
+    },
+    {
+      "probeId": "boundary-004",
+      "group": "boundary",
+      "query": "naïve",
+      "includeInCoverage": true,
+      "result": {
+        "normalizedQuery": "naïve",
+        "status": "NOT_FOUND",
+        "entryCount": 0,
+        "chineseTranslationCount": 0,
+        "entriesWithPartOfSpeech": 0,
+        "entriesWithPronunciation": 0,
+        "entriesWithSourceId": 0,
+        "ambiguousTranslationGroupCount": 0
+      }
+    },
+    {
+      "probeId": "boundary-005",
+      "group": "boundary",
+      "query": "resume",
+      "includeInCoverage": true,
+      "result": {
+        "normalizedQuery": "resume",
+        "status": "TRANSLATION_FOUND",
+        "entryCount": 1,
+        "chineseTranslationCount": 1,
+        "entriesWithPartOfSpeech": 1,
+        "entriesWithPronunciation": 1,
+        "entriesWithSourceId": 0,
+        "ambiguousTranslationGroupCount": 0
+      }
+    },
+    {
+      "probeId": "boundary-006",
+      "group": "boundary",
+      "query": "résumé",
+      "includeInCoverage": true,
+      "result": {
+        "normalizedQuery": "résumé",
+        "status": "NOT_FOUND",
+        "entryCount": 0,
+        "chineseTranslationCount": 0,
+        "entriesWithPartOfSpeech": 0,
+        "entriesWithPronunciation": 0,
+        "entriesWithSourceId": 0,
+        "ambiguousTranslationGroupCount": 0
+      }
+    },
+    {
+      "probeId": "boundary-007",
+      "group": "boundary",
+      "query": "floccinaucinihilipilification",
+      "includeInCoverage": true,
+      "result": {
+        "normalizedQuery": "floccinaucinihilipilification",
+        "status": "NOT_FOUND",
+        "entryCount": 0,
+        "chineseTranslationCount": 0,
+        "entriesWithPartOfSpeech": 0,
+        "entriesWithPronunciation": 0,
+        "entriesWithSourceId": 0,
+        "ambiguousTranslationGroupCount": 0
+      }
+    },
+    {
+      "probeId": "boundary-008",
+      "group": "boundary",
+      "query": "qzxvblorp123",
+      "includeInCoverage": false,
+      "result": {
+        "normalizedQuery": "qzxvblorp123",
+        "status": "NOT_FOUND",
+        "entryCount": 0,
+        "chineseTranslationCount": 0,
+        "entriesWithPartOfSpeech": 0,
+        "entriesWithPronunciation": 0,
+        "entriesWithSourceId": 0,
+        "ambiguousTranslationGroupCount": 0
+      }
+    },
+    {
+      "probeId": "boundary-009",
+      "group": "boundary",
+      "query": "recieive",
+      "includeInCoverage": false,
+      "result": {
+        "normalizedQuery": "recieive",
+        "status": "NOT_FOUND",
+        "entryCount": 0,
+        "chineseTranslationCount": 0,
+        "entriesWithPartOfSpeech": 0,
+        "entriesWithPronunciation": 0,
+        "entriesWithSourceId": 0,
+        "ambiguousTranslationGroupCount": 0
+      }
+    },
+    {
+      "probeId": "boundary-010",
+      "group": "boundary",
+      "query": "teh",
+      "includeInCoverage": false,
+      "result": {
+        "normalizedQuery": "teh",
+        "status": "NOT_FOUND",
+        "entryCount": 0,
+        "chineseTranslationCount": 0,
+        "entriesWithPartOfSpeech": 0,
+        "entriesWithPronunciation": 0,
+        "entriesWithSourceId": 0,
+        "ambiguousTranslationGroupCount": 0
+      }
+    }
+  ],
+  "sourceSha256": "76e15cbc8497b479ebd3834259d52366f051e16eca44c3b50fced7a78f191fb3",
+  "probeSha256": "55e4f18d10d9f64bf585037687c8289a776678ee02e6ce88759908de662a19d1"
+}

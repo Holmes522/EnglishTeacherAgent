@@ -15,6 +15,7 @@
 - [开发任务清单](tasks/todo.md)：可执行任务、验收和验证方式
 - [实施状态](docs/IMPLEMENTATION_STATUS.md)：已完成能力、验证证据、当前假设和外部阻塞
 - [本地开发与排障](docs/LOCAL_DEVELOPMENT.md)：Docker、数据库迁移、演示场景和集成测试
+- [开源词库实测](docs/evaluations/FREEDICT_REVIEW.md)：FreeDict 的 100 项覆盖率、字段限制与复现命令
 - [架构决策记录](docs/decisions/)：关键方案的背景、取舍和后果
 
 ## 技术栈
