@@ -2,27 +2,26 @@
 
 ## 1. 当前快照：先读这一节
 
-- 更新时间：2026-09-13。
-- 核对基线：`e52ffbd`（本指南新增前的 `main` 提交）。这不是永远不变的 HEAD；接手时必须检查实际 Git 状态。
+- 更新时间：2026-09-14。
+- 核对基线：`5459e68`，加本指南同次提交的 Wiktextract 离线读取切片。接手时必须检查实际 Git 状态，不将这条基线当作永远不变的 HEAD。
 - 远程仓库：[Holmes522/EnglishTeacherAgent](https://github.com/Holmes522/EnglishTeacherAgent)。此前功能和评测已同步到 `main`。
 - 当前阶段：基础链路 Checkpoint A 已交付，正在做 Task 0.2 词典来源验证，尚未完成 Task 1.6 真实查词。
-- 最近交付：固定版本 FreeDict 离线评测器、24 项脚本断言、100 项探针结构报告；**不是已上线的查词功能**。
-- 本次交接文档没有增加教学功能，不增加已完成研发任务数。
-- 恢复断点：正在筛选保留义项关联与来源信息的 Wiktionary 结构化数据。仅初步浏览了 Kaikki 页面，未下载该候选数据、未编写适配器、未做覆盖率或许可结论。随后用户要求优先补齐本指南。
+- 最近增量：`packages/lexical-knowledge` 离线 Wiktextract 读取/查询包，校验快照摘要、保留义项层级与未绑定的中文译词组；**不是已上线的查词功能**。
+- 恢复断点：Kaikki 的 teacher/apple/bank 原始样本已下载并通过读取器校验；10 个 entry、70 个 sense、5 个中文译词组。正文未提交，复现入口见 [小样本报告](evaluations/WIKTEXTRACT_REVIEW.md)。尚未扩展到 100 探针、落实应用数据许可与来源展示、接入 Worker/UI，不增加已完成任务数。
 
 一句话：**异步任务底座可用，真实英语教学能力还未接入；下一步是验证词典数据，而不是重建底座。**
 
 ## 2. 进度与边界
 
-| 范围               | 当前事实                                                                 | 证据入口                                                                               |
-| ------------------ | ------------------------------------------------------------------------ | -------------------------------------------------------------------------------------- |
-| Task 1.1–1.5       | 已完成脚手架、契约、持久化/队列、API/SSE、输入解析                       | [实施状态](IMPLEMENTATION_STATUS.md)、[任务清单](../tasks/todo.md)                     |
-| Checkpoint A       | 浏览器提交、逐项进度、部分失败、取消、失败项重试、刷新恢复；仅 fixture   | [本地演示](LOCAL_DEVELOPMENT.md)                                                       |
-| Task 0.2           | 公开候选比较、FreeDict 单候选实测完成；最终来源选择及许可/语义验证未完成 | [来源 Spike](LEXICAL_SOURCE_SPIKE.md)、[FreeDict 报告](evaluations/FREEDICT_REVIEW.md) |
-| Task 1.6           | 未交付真实查词适配器和结果卡                                             | [词典结果契约](../packages/contracts/src/results.ts) 只是契约，不是实现                |
-| Task 0.3、1.7–1.10 | 真实模型评测、网关、例句、句子评分纠错、词形词族未交付                   | [任务清单](../tasks/todo.md)                                                           |
-| Task 1.11–1.13     | 批量底座和部分扩展端口已有；真实教学批量、反馈、观测预算及发布验收未完成 | [实施状态](IMPLEMENTATION_STATUS.md)                                                   |
-| 后续阶段           | 账号/学习闭环、真实 TTS、第二语言、插件运行时未交付                      | [实施计划](../tasks/plan.md)                                                           |
+| 范围               | 当前事实                                                                          | 证据入口                                                                                               |
+| ------------------ | --------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------ |
+| Task 1.1–1.5       | 已完成脚手架、契约、持久化/队列、API/SSE、输入解析                                | [实施状态](IMPLEMENTATION_STATUS.md)、[任务清单](../tasks/todo.md)                                     |
+| Checkpoint A       | 浏览器提交、逐项进度、部分失败、取消、失败项重试、刷新恢复；仅 fixture            | [本地演示](LOCAL_DEVELOPMENT.md)                                                                       |
+| Task 0.2           | FreeDict 100 项实测与 Wiktextract 三词读取完成；最终来源选择及许可/语义验证未完成 | [FreeDict 报告](evaluations/FREEDICT_REVIEW.md)、[Wiktextract 报告](evaluations/WIKTEXTRACT_REVIEW.md) |
+| Task 1.6           | 未交付真实查词适配器和结果卡                                                      | [词典结果契约](../packages/contracts/src/results.ts) 只是契约，不是实现                                |
+| Task 0.3、1.7–1.10 | 真实模型评测、网关、例句、句子评分纠错、词形词族未交付                            | [任务清单](../tasks/todo.md)                                                                           |
+| Task 1.11–1.13     | 批量底座和部分扩展端口已有；真实教学批量、反馈、观测预算及发布验收未完成          | [实施状态](IMPLEMENTATION_STATUS.md)                                                                   |
+| 后续阶段           | 账号/学习闭环、真实 TTS、第二语言、插件运行时未交付                               | [实施计划](../tasks/plan.md)                                                                           |
 
 按阶段 1 的 13 个任务计，完成 5 个，约 38%；这是任务计数，不是工作量百分比或上线成熟度。不要因为页面能操作就报告 MVP 已完成。
 
@@ -56,14 +55,14 @@ FreeDict `eng-zho/2025.11.23` 已跑完固定 100 项查询，其中 97 项有�
 
 已有候选比较包括 Cambridge、Oxford、ECDICT：前两者的存储授权需确认，ECDICT 不能仅凭软件 MIT 标记推定聚合数据来源全部可商用。具体证据见 [来源 Spike](LEXICAL_SOURCE_SPIKE.md)。
 
-待核实候选入口（只是研究线索，不代表获批）：[Kaikki English](https://kaikki.org/dictionary/English/index.html)、[原始数据下载页](https://kaikki.org/dictionary/rawdata.html)。接手时重查版本、许可、是否经过额外数据合并，以及英文义项与中文翻译的关联。不要混淆 English 与 Simple English 版本，也不要未经大小检查就下载数 GB 全量数据。
+Kaikki 原始 JSONL 三词样本已实测，摘要和限制见 [Wiktextract 报告](evaluations/WIKTEXTRACT_REVIEW.md)。读取器有意不把简短翻译标签绑定到完整 gloss；`FOUND` 只表示快照有中文译词。不要重新做这三词初查；继续扩展覆盖评测与应用来源/许可展示设计。不要混淆 English 与 Simple English 版本，也不要未经大小检查就下载数 GB 全量数据。
 
 ## 5. 下一步如何接着做
 
 按 [现有增量计划](../tasks/plan.md) 的 0.2b/0.2c → 1.6a → 1.6b 推进：
 
-1. **先验证一个候选的少量真实词条。** 覆盖常见词、多义词与未收录输入；记录版本、来源定位、署名/许可、词性、义项和中文字段。验证是否能可靠关联，不以“有中文字符串”代替义项验证。
-2. **证据可行后实现适配与评测。** 复用 [100 项输入探针](../tests/golden/lexical-probes.json)，先写错误格式、未知词、歧义关联和溯源测试，再实现最小映射。输出可复现报告，保留未测项和被拒绝条目。
+1. **扩展 Wiktextract 固定样本评测。** 三词结构验证已完成，下一步复用 [100 项输入探针](../tests/golden/lexical-probes.json)，固定快照、记录缺失/被拒绝条目和许可溯源；不以“有中文字符串”代替义项验证。
+2. **确定有限译词组的输出边界。** 基于现有读取器评估独立的有限查询契约；需要完整义项绑定的部分则补可审计映射。不得将未绑定译词组硬塞入 `WordAnalysis.zhDefinition`。本轮没有变更原 Task 1.6 验收。
 3. **通过数据门槛后接入 Worker 和结果卡。** 先阅读下节代码；明确有限覆盖，不伪造全部标准义项。需要新增契约字段时同步 schema 生成及测试，再做桌面/移动浏览器 E2E。
 4. **若数据仍不可用，记录具体阻塞与替代验证。** 不反复重做已完成的 FreeDict 结构评测；不为了展示结果而用模型编造词典事实。需要新的采购、发布决定或材料时说明所需用户行动。
 
@@ -81,8 +80,9 @@ FreeDict `eng-zho/2025.11.23` 已跑完固定 100 项查询，其中 97 项有�
 | 用户界面与刷新恢复             | [composer.tsx](../apps/web/app/composer.tsx)、[page.tsx](../apps/web/app/page.tsx)、[幂等键](../apps/web/lib/request-key.ts)                     |
 | 输入规范化与拆分               | [parseLearningInput.ts](../packages/content-intake/src/parseLearningInput.ts) 及同目录测试                                                       |
 | 离线词典验证                   | [脚本目录](../scripts/lexical/)、[黄金集目录](../tests/golden/)                                                                                  |
+| Wiktextract 离线读取与查词     | [wiktextract.ts](../packages/lexical-knowledge/src/wiktextract.ts) 及同目录合成测试；尚未被应用加载                                              |
 
-当前 `PROCESSOR_MODE` 只接受 `fixture` / `disabled`，未设置时为 disabled。fixture 正常返回 `CLARIFICATION`；精确输入 `fixture:fail` 会持续产生演示失败。当前没有 `packages/lexical-knowledge` 实现，不要引用不存在的包。
+当前 `PROCESSOR_MODE` 只接受 `fixture` / `disabled`，未设置时为 disabled。fixture 正常返回 `CLARIFICATION`；精确输入 `fixture:fail` 会持续产生演示失败。`packages/lexical-knowledge` 已有离线读取器，但没有联网 provider 或 `WordAnalysis` 结果适配器。
 
 ## 7. 环境与验证
 
@@ -105,7 +105,7 @@ docker compose ps
 - 基础链路：71 条 Vitest 单元测试、11 条真实 PostgreSQL/Redis 集成测试、lint/typecheck/build/契约漂移检查通过；人工浏览器验证过刷新、重试、取消和 Worker 重启恢复。
 - FreeDict 增量：24 项独立 PowerShell 断言通过，固定文件重算报告一致；重新运行过 71 条单元测试、lint/typecheck/build/契约漂移检查。这 24 项不包含在 `pnpm test` 中。
 - 没有自动化浏览器 E2E/CI、压力测试和完整生产验收；历史依赖审计结果不代表当前永远无漏洞。
-- 本次新增接手文档只验证文档路径、命令引用、事实和差异，不重跑应用测试，不声称 Docker 当前健康。
+- 2026-09-14 Wiktextract 增量：全仓 89 条单元测试（含新增 18 条）、契约漂移、lint/typecheck/build 通过；三词真实快照验证通过。数据库/队列和 UI 未改，未重跑集成/浏览器验收与依赖审计，不声称 Docker 当前健康。
 
 代码修改后的常用验证：
 

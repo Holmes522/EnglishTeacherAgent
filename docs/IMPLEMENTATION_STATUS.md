@@ -1,7 +1,7 @@
 # 实施状态
 
-- 更新日期：2026-09-13
-- 交付分支：`main`（基础链路与离线 FreeDict 评测已合并；功能/评测基线 `e52ffbd`）
+- 更新日期：2026-09-14
+- 交付分支：`main`；本次增量为 Wiktextract 离线读取切片，接手时核对 Git HEAD。
 - 新会话接手入口：[AI Agent 研发接手指南](AGENT_HANDOFF.md)。新增指南不改变任务完成度。
 - 产品/架构文档整体仍为 Draft/Proposed；ADR-005 的本地运行方案已获确认，不代表生产部署获批。
 
@@ -19,7 +19,9 @@
 
 ## 当前验证
 
-每个增量均运行相应 focused test 和包构建。最新全仓门禁包括：
+2026-09-14 Wiktextract 增量：`pnpm lint`、`pnpm typecheck`、`pnpm test`（89 条，含新增 18 条与契约漂移检查）、`pnpm build` 全部通过。三个真实快照通过读取器校验；新增文档及入口的 66 个本地链接检查通过，独立代码审查无 Required 问题。未修改应用、数据库/队列或 UI，本轮不重跑集成测试、浏览器验收和依赖审计；仅复用已有 Zod 4.5.4，lockfile 未新增依赖版本。验证运行时仍为 Node 22.20.0，不代表 Node 24 验收。
+
+以下是此前基础链路验证记录，不应当作本轮重跑结果：
 
 - `pnpm lint`
 - `pnpm typecheck`
@@ -56,6 +58,8 @@ Docker Desktop 残留 socket 错误已通过备份运行时目录恢复，未删
 - 生产部署：本地数据库/队列方案已实现；生产限流与预算、端到端 trace/指标告警、严格 nonce CSP、TLS、备份恢复、负载/隐私/可访问性专项验收仍待完成。当前不是生产可发布版本。
 
 ## 下一实施顺序
+
+2026-09-14：新增 `packages/lexical-knowledge` 离线 Wiktextract 读取器，三词真实快照通过摘要与结构校验；分别保留英文义项层级和中文译词组，不自动绑定。详情与复现见 [Wiktextract 小样本报告](evaluations/WIKTEXTRACT_REVIEW.md)。未接入 Web/Worker，Task 0.2/1.6 保持未完成。
 
 2026-09-13：用户确认开源优先路线。交付独立的离线 FreeDict 评测工具和 [实测报告](evaluations/FREEDICT_REVIEW.md)，完成 100 项查询与字段映射边界检查。97 项有效输入中 73 项中文译词结构命中，29 项需核对义项对应，许可版本链尚待进一步核实；不是已上线的真实查词功能，Task 0.2/1.6 保持未完成。
 

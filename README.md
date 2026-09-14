@@ -17,6 +17,7 @@
 - [实施状态](docs/IMPLEMENTATION_STATUS.md)：已完成能力、验证证据、当前假设和外部阻塞
 - [本地开发与排障](docs/LOCAL_DEVELOPMENT.md)：Docker、数据库迁移、演示场景和集成测试
 - [开源词库实测](docs/evaluations/FREEDICT_REVIEW.md)：FreeDict 的 100 项覆盖率、字段限制与复现命令
+- [Wiktextract 读取切片](docs/evaluations/WIKTEXTRACT_REVIEW.md)：三词真实样本、离线读取包与未绑定译词组边界
 - [架构决策记录](docs/decisions/)：关键方案的背景、取舍和后果
 
 ## 技术栈
@@ -60,6 +61,7 @@ pnpm dev
 - `packages/runtime`：数据库迁移、事务 repository、状态机、队列与 fixture 处理器。
 - `packages/contracts`：Zod 运行时契约及同源生成的 JSON Schema/OpenAPI。
 - `packages/content-intake`：Unicode 规范化、批量拆分、类型和显式意图识别。
+- `packages/lexical-knowledge`：小型 Wiktextract JSONL 快照的离线校验与查询，尚未接入 Web/Worker。
 - `packages/config`：启动环境变量校验。
 - `packages/speech`：供应商无关端口与 `NOT_ENABLED` 实现。
 
