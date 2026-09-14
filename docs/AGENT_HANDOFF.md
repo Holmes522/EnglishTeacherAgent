@@ -3,8 +3,8 @@
 ## 1. 当前快照：先读这一节
 
 - 更新时间：2026-09-14。
-- 核对基线：`5459e68`，加本指南同次提交的 Wiktextract 离线读取切片。接手时必须检查实际 Git 状态，不将这条基线当作永远不变的 HEAD。
-- 远程仓库：[Holmes522/EnglishTeacherAgent](https://github.com/Holmes522/EnglishTeacherAgent)。此前功能和评测已同步到 `main`。
+- 核对基线：本地 `codex/wiktextract-reader` 的 `253ee37`（Wiktextract 离线读取切片），加后续交接状态提交。接手时必须检查实际 Git 状态。
+- 远程仓库：[Holmes522/EnglishTeacherAgent](https://github.com/Holmes522/EnglishTeacherAgent)。此前交付已同步到 `main` 的 `5459e68`；**本轮 `253ee37` 及交接状态尚未推送**，GitHub TLS 握手连续失败，远端当前状态无法重新确认。本地代码已提交且未丢失；没有合并本轮到本地 main、没有强推或关闭 TLS 验证。
 - 当前阶段：基础链路 Checkpoint A 已交付，正在做 Task 0.2 词典来源验证，尚未完成 Task 1.6 真实查词。
 - 最近增量：`packages/lexical-knowledge` 离线 Wiktextract 读取/查询包，校验快照摘要、保留义项层级与未绑定的中文译词组；**不是已上线的查词功能**。
 - 恢复断点：Kaikki 的 teacher/apple/bank 原始样本已下载并通过读取器校验；10 个 entry、70 个 sense、5 个中文译词组。正文未提交，复现入口见 [小样本报告](evaluations/WIKTEXTRACT_REVIEW.md)。尚未扩展到 100 探针、落实应用数据许可与来源展示、接入 Worker/UI，不增加已完成任务数。
@@ -60,6 +60,8 @@ Kaikki 原始 JSONL 三词样本已实测，摘要和限制见 [Wiktextract 报�
 ## 5. 下一步如何接着做
 
 按 [现有增量计划](../tasks/plan.md) 的 0.2b/0.2c → 1.6a → 1.6b 推进：
+
+先处理同步断点：检查当前分支与 `git status`，网络恢复后读取远端分支，推送 `codex/wiktextract-reader`；确认无远端分歧且审查/验证仍适用后快进合并并推送 main。不要假定本轮已经在 GitHub，也不要覆盖他人的新提交。同步完成后删除此临时阻塞说明并更新快照。
 
 1. **扩展 Wiktextract 固定样本评测。** 三词结构验证已完成，下一步复用 [100 项输入探针](../tests/golden/lexical-probes.json)，固定快照、记录缺失/被拒绝条目和许可溯源；不以“有中文字符串”代替义项验证。
 2. **确定有限译词组的输出边界。** 基于现有读取器评估独立的有限查询契约；需要完整义项绑定的部分则补可审计映射。不得将未绑定译词组硬塞入 `WordAnalysis.zhDefinition`。本轮没有变更原 Task 1.6 验收。

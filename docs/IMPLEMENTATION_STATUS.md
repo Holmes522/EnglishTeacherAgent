@@ -1,7 +1,7 @@
 # 实施状态
 
 - 更新日期：2026-09-14
-- 交付分支：`main`；本次增量为 Wiktextract 离线读取切片，接手时核对 Git HEAD。
+- 本轮分支：本地 `codex/wiktextract-reader`，实现提交 `253ee37`；GitHub TLS 握手连续失败，尚未推送或合并 main。上次确认远端 main 为 `5459e68`；恢复步骤见接手指南。
 - 新会话接手入口：[AI Agent 研发接手指南](AGENT_HANDOFF.md)。新增指南不改变任务完成度。
 - 产品/架构文档整体仍为 Draft/Proposed；ADR-005 的本地运行方案已获确认，不代表生产部署获批。
 
