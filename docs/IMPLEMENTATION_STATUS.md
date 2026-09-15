@@ -1,7 +1,7 @@
 # 实施状态
 
 - 更新日期：2026-09-15
-- 百项评测已同步 GitHub main（`e0d94d9`）；本轮为 `codex/translation-contract-spec` 文档增量，接手时核对实际 Git HEAD。
+- 规格文档已同步 GitHub main（`554eebc`）；本轮为 `codex/lexical-translation-contract` 实现增量，接手时核对实际 Git HEAD。
 - 新会话接手入口：[AI Agent 研发接手指南](AGENT_HANDOFF.md)。新增指南不改变任务完成度。
 - 产品/架构文档整体仍为 Draft/Proposed；ADR-005 的本地运行方案已获确认，不代表生产部署获批。
 
@@ -19,7 +19,11 @@
 
 ## 当前验证
 
-2026-09-15 契约规格增量仅修改文档：新增 [有限译词契约草案](LEXICAL_TRANSLATION_SPEC.md)，待用户确认再实现。核对现有读取器、共享契约及生成命令；54 个本地文档链接、定向 Prettier 与差异检查通过。不重跑下述业务测试，不增加功能完成度。
+2026-09-15 独立译词契约：用户已确认，交付 [schema、测试与生成 component](LEXICAL_TRANSLATION_SPEC.md)。56 项定向测试、全仓 154 项测试及契约漂移、lint/typecheck/build 全部通过；独立复审通过。与基线逐项比较，除新增 component 外旧生成 schema/API 路径完全一致。未接入 LearningResult、Worker/UI 或真实数据，不勾选 Task 0.2/1.6。没有对应行为/依赖变更，未重跑集成、浏览器、词库采集和依赖审计；Node 22.20.0 本机结果不代表 Node 24 验收。
+
+此前规格文档增量：54 个本地链接、定向 Prettier 与差异检查通过，未运行业务测试。用户随后确认了首个编码范围。
+
+本轮文档检查：66 个本地链接有效，定向 Prettier 与 `git diff --check` 通过；进度与代码一起提交。
 
 2026-09-15 百项评测增量：`pnpm lint`、`pnpm typecheck`、`pnpm test`（100 条，含契约漂移检查）、`pnpm build` 全部通过。98 份真实快照离线重算与本次提交的 JSON 报告完全一致，97 项有效输入没有未决项。独立复审已关闭覆盖比例和旧诊断残留两项问题。未修改应用、数据库/队列或 UI，本轮未重跑集成测试、浏览器验收和依赖审计；lockfile 未新增依赖版本。验证运行时仍为 Node 22.20.0，不代表 Node 24 验收。
 
@@ -65,7 +69,7 @@ Docker Desktop 残留 socket 错误已通过备份运行时目录恢复，未删
 
 ## 下一实施顺序
 
-当前断点：确认 [有限译词契约规格](LEXICAL_TRANSLATION_SPEC.md)，再实施独立 schema、合成测试与生成产物；不将其提前接入 LearningResult 或应用。具体快照许可、适配器及 UI 门槛未关闭。
+当前断点：[独立有限译词契约](LEXICAL_TRANSLATION_SPEC.md)已实现；下一步有限快照来源清单和离线适配器，验证来源关联、字段映射、状态与超限失败；不提前接入 LearningResult 或应用。具体快照许可及 UI 门槛未关闭。
 
 2026-09-15：完成 [Wiktextract 100 项采集与离线重算](evaluations/WIKTEXTRACT_COVERAGE.md)（快照采集于 09-14），97 项有效输入全部校验，71 项存在中文译词，26 项无中文译词；读取器按上游可缺省字段跳过并计数不完整翻译记录，未降低错误类型校验。尚未接入应用，不勾选 Task 0.2/1.6 的整体验收。
 

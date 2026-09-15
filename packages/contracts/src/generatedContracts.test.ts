@@ -1,8 +1,25 @@
 import { describe, expect, it } from "vitest";
 
-import { createJsonSchemas, createOpenApiDocument } from "./generatedContracts.js";
+import {
+  createJsonSchemas,
+  createOpenApiDocument,
+} from "./generatedContracts.js";
 
 describe("generated contracts", () => {
+  it("adds the standalone translation component without exposing it in API responses", () => {
+    const schemas = createJsonSchemas();
+    expect(schemas).toHaveProperty("LexicalTranslationResult");
+    const document = createOpenApiDocument();
+    expect(document.components.schemas).toHaveProperty(
+      "LexicalTranslationResult",
+    );
+    expect(JSON.stringify(document.paths)).not.toContain(
+      "LexicalTranslationResult",
+    );
+    expect(JSON.stringify(schemas.LearningResult)).not.toContain(
+      "LEXICAL_TRANSLATION",
+    );
+  });
   it("derives JSON Schema limits from the runtime schemas", () => {
     const schemas = createJsonSchemas();
     const createInput = schemas.CreateLearningRunInput as {
@@ -16,7 +33,9 @@ describe("generated contracts", () => {
     const document = createOpenApiDocument();
 
     expect(document.openapi).toBe("3.1.0");
-    expect(document.paths["/api/v1/learning-runs"]?.post?.responses["202"]).toBeDefined();
+    expect(
+      document.paths["/api/v1/learning-runs"]?.post?.responses["202"],
+    ).toBeDefined();
     expect(document.components.schemas.LearningRun).toBeDefined();
     expect(document.components.schemas.PublicError).toBeDefined();
   });

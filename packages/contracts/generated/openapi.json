@@ -3347,6 +3347,291 @@
           "extensionSlots"
         ],
         "additionalProperties": false
+      },
+      "LexicalTranslationResult": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "object",
+        "properties": {
+          "schemaVersion": {
+            "type": "number",
+            "const": 1
+          },
+          "type": {
+            "type": "string",
+            "const": "LEXICAL_TRANSLATION"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "query": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 200,
+                "pattern": "\\S"
+              },
+              "targetLanguage": {
+                "type": "string",
+                "const": "en"
+              },
+              "coverage": {
+                "type": "string",
+                "const": "SNAPSHOT_ONLY"
+              },
+              "isCompleteForSource": {
+                "type": "boolean",
+                "const": false
+              },
+              "status": {
+                "type": "string",
+                "enum": [
+                  "FOUND",
+                  "NO_CHINESE_TRANSLATION",
+                  "NOT_FOUND_IN_SNAPSHOT"
+                ]
+              },
+              "entries": {
+                "maxItems": 100,
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "headword": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 200,
+                      "pattern": "\\S"
+                    },
+                    "partOfSpeech": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 50,
+                      "pattern": "\\S"
+                    },
+                    "snapshotLine": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 9007199254740991
+                    },
+                    "incompleteTranslationCount": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 10000
+                    },
+                    "translationGroups": {
+                      "maxItems": 10000,
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "label": {
+                            "anyOf": [
+                              {
+                                "type": "string",
+                                "minLength": 1,
+                                "maxLength": 4000,
+                                "pattern": "\\S"
+                              },
+                              {
+                                "type": "null"
+                              }
+                            ]
+                          },
+                          "senseBinding": {
+                            "type": "string",
+                            "const": "UNRESOLVED"
+                          },
+                          "translations": {
+                            "minItems": 1,
+                            "maxItems": 10000,
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "text": {
+                                  "type": "string",
+                                  "minLength": 1,
+                                  "maxLength": 4000,
+                                  "pattern": "\\S"
+                                },
+                                "languageCode": {
+                                  "type": "string",
+                                  "enum": [
+                                    "zh",
+                                    "cmn"
+                                  ]
+                                },
+                                "languageName": {
+                                  "type": "string",
+                                  "maxLength": 4000
+                                },
+                                "romanization": {
+                                  "type": "string",
+                                  "maxLength": 4000
+                                },
+                                "alternative": {
+                                  "type": "string",
+                                  "maxLength": 4000
+                                },
+                                "note": {
+                                  "type": "string",
+                                  "maxLength": 4000
+                                },
+                                "tags": {
+                                  "maxItems": 100,
+                                  "type": "array",
+                                  "items": {
+                                    "type": "string",
+                                    "maxLength": 4000
+                                  }
+                                },
+                                "topics": {
+                                  "maxItems": 100,
+                                  "type": "array",
+                                  "items": {
+                                    "type": "string",
+                                    "maxLength": 4000
+                                  }
+                                }
+                              },
+                              "required": [
+                                "text",
+                                "languageCode",
+                                "tags",
+                                "topics"
+                              ],
+                              "additionalProperties": false
+                            }
+                          }
+                        },
+                        "required": [
+                          "label",
+                          "senseBinding",
+                          "translations"
+                        ],
+                        "additionalProperties": false
+                      }
+                    }
+                  },
+                  "required": [
+                    "headword",
+                    "partOfSpeech",
+                    "snapshotLine",
+                    "incompleteTranslationCount",
+                    "translationGroups"
+                  ],
+                  "additionalProperties": false
+                }
+              },
+              "source": {
+                "type": "object",
+                "properties": {
+                  "provider": {
+                    "type": "string",
+                    "const": "KAIKKI_WIKTEXTRACT"
+                  },
+                  "snapshotSha256": {
+                    "type": "string",
+                    "pattern": "^[a-f0-9]{64}$"
+                  },
+                  "retrievedAt": {
+                    "type": "string",
+                    "format": "date-time",
+                    "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+                  },
+                  "downloadUrl": {
+                    "type": "string",
+                    "maxLength": 2000,
+                    "format": "uri"
+                  },
+                  "upstreamPageUrl": {
+                    "type": "string",
+                    "maxLength": 2000,
+                    "format": "uri"
+                  },
+                  "upstreamRevision": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 200,
+                        "pattern": "\\S"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "attribution": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 2000,
+                    "pattern": "\\S"
+                  },
+                  "license": {
+                    "type": "object",
+                    "properties": {
+                      "name": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 100,
+                        "pattern": "\\S"
+                      },
+                      "url": {
+                        "type": "string",
+                        "maxLength": 2000,
+                        "format": "uri"
+                      }
+                    },
+                    "required": [
+                      "name",
+                      "url"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "changes": {
+                    "minItems": 1,
+                    "maxItems": 20,
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 1000,
+                      "pattern": "\\S"
+                    }
+                  }
+                },
+                "required": [
+                  "provider",
+                  "snapshotSha256",
+                  "retrievedAt",
+                  "downloadUrl",
+                  "upstreamPageUrl",
+                  "upstreamRevision",
+                  "attribution",
+                  "license",
+                  "changes"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "required": [
+              "query",
+              "targetLanguage",
+              "coverage",
+              "isCompleteForSource",
+              "status",
+              "entries",
+              "source"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "schemaVersion",
+          "type",
+          "data"
+        ],
+        "additionalProperties": false
       }
     },
     "securitySchemes": {

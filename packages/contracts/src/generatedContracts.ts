@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { lexicalTranslationResultSchema } from "./lexicalTranslation.js";
 
 import {
   createLearningRunInputSchema,
@@ -20,6 +21,7 @@ const contractSchemas = {
   SentenceReview: sentenceReviewSchema,
   PublicError: publicErrorSchema,
   CapabilityManifest: capabilityManifestSchema,
+  LexicalTranslationResult: lexicalTranslationResultSchema,
 } satisfies Record<string, z.ZodType>;
 
 type JsonSchema = Record<string, unknown>;

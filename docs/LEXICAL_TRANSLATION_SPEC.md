@@ -1,6 +1,6 @@
 # 有限译词查询：契约规格
 
-状态：Draft，等待用户确认；2026-09-15。代码基线：`e0d94d9`。归属 lexical-knowledge 模块，承接 Task 0.2 / 1.6；不修改原任务验收标准。
+状态：首个契约增量已获用户确认并实现；2026-09-15。实施基线：`554eebc`，加本文件同次提交的代码。归属 lexical-knowledge 模块，承接 Task 0.2 / 1.6；不修改原任务验收标准，不代表真实查词已交付。
 
 ## 1. 目标与实施假设
 
@@ -17,7 +17,7 @@
 - 不改变 `WordAnalysis`、fixture/disabled、任务状态、语言配置或任何现有响应。未来接入时再一起更新 union、消费者和端到端测试。
 - 这是一个小切片的契约，不搭建通用词典插件、授权引擎或网络 provider。
 
-## 3. 字段与不变量（拟定）
+## 3. 字段与不变量
 
 `data` 固定 `targetLanguage: en`、`coverage: SNAPSHOT_ONLY`、`isCompleteForSource: false`；`query` 为非空、非纯空白字符串，最多 200 个 UTF-16 code units，与现有读取器一致。保留输入，不以契约解析隐式纠正拼写。
 
@@ -38,7 +38,7 @@
 - 每组 `translations` 至少 1 条；每个 entry 跨组最多 10,000 条。每条 `text` 非空非空白且最多 4,000，`languageCode` 为 `zh` 或 `cmn`。
 - 保留可选 `languageName`、`romanization`、`alternative`、`note`，各最多 4,000；保留必填 `tags`、`topics` 数组，各最多 100 项、每项最多 4,000。无源值时适配器输出空数组，不伪造标签；可选值缺省时不输出。
 
-上述长度均按既有 Zod 字符串长度行为计算；不在契约层静默截断正文。上限沿用已测读取器，不等于将来 SSE/页面的载荷预算；应用接入前还须单独限制序列化体积。
+字符串数值上限参考读取器，但按本规格的 UTF-16 口径执行，不在契约层静默截断正文。实施时实测锁定 Zod 4.5.4 的 `.max(1)` 接受单个 emoji，按码点而非 UTF-16 计数；新契约补充 `value.length` refinement，并以代理对边界测试固定要求。该约束可能比原始读取器对部分字段更严，未来适配器遇到超限必须显式失败。数量上限不等于将来 SSE/页面的载荷预算；应用接入前还须单独限制序列化体积。
 
 ## 4. 来源与许可元数据
 
@@ -87,6 +87,10 @@ pnpm build
 
 始终：先测失败、保留来源不确定性、更新交接资料。先询问：额外依赖、数据库迁移、真实数据发布和采购。禁止：提交凭据/未经审查正文、硬配义项、降低 Task 1.6 原验收或把草案标为已实现。
 
-## 6. 待确认与后续
+## 6. 实施证据与后续
 
-待用户确认本规格与首个编码范围。确认后只实现第 2–5 节契约；具体数据切片批准、离线结果适配器、Worker/UI 接入仍按后续小步分别验证，不因规格批准自动完成。原 Task 0.2 / 1.6 保持未完成。
+用户已确认本规格与首个编码范围，无需再次确认同一契约。已交付 [schema](../packages/contracts/src/lexicalTranslation.ts)、[合成测试](../packages/contracts/src/lexicalTranslation.test.ts)、导出及 JSON Schema/OpenAPI component；56 项定向测试、全仓 154 项测试及契约漂移、lint/typecheck/build 通过，独立复审无 Required。与基线生成产物逐项比较：除新增 component 外，所有旧 schema 和 API 路径完全一致。
+
+官方实现依据：[Zod URL 校验](https://zod.dev/api#urls)、[refinement](https://zod.dev/api#superrefine)、[JSON Schema 生成](https://zod.dev/json-schema)。沿用项目锁定版本，无依赖升级。生成的 JSON Schema 不完整表达状态与 entries 的关系、行号唯一、跨组总量、URL 凭据限制和 UTF-16 refinement；消费端必须使用运行时 schema 校验，不能把单独 JSON Schema 通过当作所有不变量通过。
+
+本轮不重跑真实词库采集、数据库/队列集成、浏览器验收和依赖审计：没有对应行为或依赖变更。Node 22.20.0 本机验证不代表 Node 24 生产验收。下一步是有限快照来源清单与离线结果适配器，先用合成数据验证映射、来源关联和明确失败；真实数据切片批准、Worker/UI 接入仍需各自门槛。原 Task 0.2 / 1.6 保持未完成。
