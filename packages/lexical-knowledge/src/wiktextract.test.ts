@@ -30,6 +30,24 @@ const read = (...rows: unknown[]) => {
 };
 
 describe("offline Wiktextract reader", () => {
+  it("counts and skips incomplete translation records without losing usable translations", () => {
+    const result = lookupWiktextract(
+      read({
+        ...entry,
+        translations: [
+          { lang_code: "zh" },
+          { word: "unknown language" },
+          { lang_code: "cmn", word: "样本" },
+        ],
+      }),
+      "sample",
+    );
+    expect(result.status).toBe("FOUND");
+    expect(result.entries[0]?.incompleteTranslationCount).toBe(2);
+    expect(result.entries[0]?.translationGroups[0]?.translations).toHaveLength(
+      1,
+    );
+  });
   it("retains gloss hierarchy, qualifiers and source labels without binding translations", () => {
     const snapshot = read(entry);
     const result = lookupWiktextract(snapshot, "sample");

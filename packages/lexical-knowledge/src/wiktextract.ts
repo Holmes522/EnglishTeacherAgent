@@ -6,8 +6,8 @@ import { z } from "zod";
 const text = z.string().max(4_000);
 const labels = z.array(text).max(100);
 const translationSchema = z.object({
-  lang_code: z.string().min(1).max(35),
-  word: text,
+  lang_code: z.string().min(1).max(35).optional(),
+  word: text.optional(),
   sense: text.optional(),
   lang: text.optional(),
   roman: text.optional(),
@@ -38,7 +38,10 @@ const entrySchema = z.object({
   translations: z.array(translationSchema).max(10_000).default([]),
 });
 
-type Translation = z.infer<typeof translationSchema>;
+type Translation = z.infer<typeof translationSchema> & {
+  lang_code: string;
+  word: string;
+};
 export type TranslationGroup = {
   label: string | null;
   senseBinding: "UNRESOLVED";
@@ -50,6 +53,7 @@ export type WiktextractEntry = Omit<
 > & {
   // Physical location in this exact byte snapshot, NOT an upstream sense/revision ID.
   source: { sha256: string; line: number };
+  incompleteTranslationCount: number;
   translationGroups: TranslationGroup[];
 };
 export type WiktextractSnapshot = {
@@ -95,23 +99,26 @@ export function readWiktextract(
     }
     const { translations, ...fields } = entry;
     const groups = new Map<string | null, TranslationGroup>();
+    let incompleteTranslationCount = 0;
     for (const translation of translations) {
-      if (
-        !["zh", "cmn"].includes(translation.lang_code) ||
-        !translation.word.trim()
-      )
+      const { lang_code, word } = translation;
+      if (!lang_code || !word?.trim()) {
+        incompleteTranslationCount++;
         continue;
+      }
+      if (!["zh", "cmn"].includes(lang_code)) continue;
       const label = translation.sense?.trim() || null;
       let group = groups.get(label);
       if (!group) {
         group = { label, senseBinding: "UNRESOLVED", translations: [] };
         groups.set(label, group);
       }
-      group.translations.push(translation);
+      group.translations.push({ ...translation, lang_code, word });
     }
     entries.push({
       ...fields,
       source: { sha256, line: offset + 1 },
+      incompleteTranslationCount,
       translationGroups: [...groups.values()],
     });
   }

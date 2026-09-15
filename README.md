@@ -18,6 +18,7 @@
 - [本地开发与排障](docs/LOCAL_DEVELOPMENT.md)：Docker、数据库迁移、演示场景和集成测试
 - [开源词库实测](docs/evaluations/FREEDICT_REVIEW.md)：FreeDict 的 100 项覆盖率、字段限制与复现命令
 - [Wiktextract 读取切片](docs/evaluations/WIKTEXTRACT_REVIEW.md)：三词真实样本、离线读取包与未绑定译词组边界
+- [Wiktextract 100 项评测](docs/evaluations/WIKTEXTRACT_COVERAGE.md)：固定快照、71/97 译词命中、缺失行为及采集/离线重算命令
 - [架构决策记录](docs/decisions/)：关键方案的背景、取舍和后果
 
 ## 技术栈

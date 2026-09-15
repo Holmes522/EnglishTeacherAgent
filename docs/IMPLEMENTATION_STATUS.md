@@ -1,7 +1,7 @@
 # 实施状态
 
-- 更新日期：2026-09-14
-- 本轮分支：本地 `codex/wiktextract-reader`，实现提交 `253ee37`；GitHub TLS 握手连续失败，尚未推送或合并 main。上次确认远端 main 为 `5459e68`；恢复步骤见接手指南。
+- 更新日期：2026-09-15
+- 上轮读取器已恢复 GitHub 同步并合并 main（`91f9bb4`）；本轮增量分支为 `codex/wiktextract-evaluation`，接手时核对实际 Git HEAD。
 - 新会话接手入口：[AI Agent 研发接手指南](AGENT_HANDOFF.md)。新增指南不改变任务完成度。
 - 产品/架构文档整体仍为 Draft/Proposed；ADR-005 的本地运行方案已获确认，不代表生产部署获批。
 
@@ -19,7 +19,11 @@
 
 ## 当前验证
 
-2026-09-14 Wiktextract 增量：`pnpm lint`、`pnpm typecheck`、`pnpm test`（89 条，含新增 18 条与契约漂移检查）、`pnpm build` 全部通过。三个真实快照通过读取器校验；新增文档及入口的 66 个本地链接检查通过，独立代码审查无 Required 问题。未修改应用、数据库/队列或 UI，本轮不重跑集成测试、浏览器验收和依赖审计；仅复用已有 Zod 4.5.4，lockfile 未新增依赖版本。验证运行时仍为 Node 22.20.0，不代表 Node 24 验收。
+2026-09-15 百项评测增量：`pnpm lint`、`pnpm typecheck`、`pnpm test`（100 条，含契约漂移检查）、`pnpm build` 全部通过。98 份真实快照离线重算与本次提交的 JSON 报告完全一致，97 项有效输入没有未决项。独立复审已关闭覆盖比例和旧诊断残留两项问题。未修改应用、数据库/队列或 UI，本轮未重跑集成测试、浏览器验收和依赖审计；lockfile 未新增依赖版本。验证运行时仍为 Node 22.20.0，不代表 Node 24 验收。
+
+上一轮 2026-09-14 读取器增量：89 条测试、契约漂移、lint/typecheck/build、三个真实快照及 66 个本地文档链接验证通过。
+
+本轮文档检查：入口与更新文档的 74 个本地链接有效，定向 Prettier 与 `git diff --check` 通过。
 
 以下是此前基础链路验证记录，不应当作本轮重跑结果：
 
@@ -58,6 +62,8 @@ Docker Desktop 残留 socket 错误已通过备份运行时目录恢复，未删
 - 生产部署：本地数据库/队列方案已实现；生产限流与预算、端到端 trace/指标告警、严格 nonce CSP、TLS、备份恢复、负载/隐私/可访问性专项验收仍待完成。当前不是生产可发布版本。
 
 ## 下一实施顺序
+
+2026-09-15：完成 [Wiktextract 100 项采集与离线重算](evaluations/WIKTEXTRACT_COVERAGE.md)（快照采集于 09-14），97 项有效输入全部校验，71 项存在中文译词，26 项无中文译词；读取器按上游可缺省字段跳过并计数不完整翻译记录，未降低错误类型校验。尚未接入应用，不勾选 Task 0.2/1.6 的整体验收。
 
 2026-09-14：新增 `packages/lexical-knowledge` 离线 Wiktextract 读取器，三词真实快照通过摘要与结构校验；分别保留英文义项层级和中文译词组，不自动绑定。详情与复现见 [Wiktextract 小样本报告](evaluations/WIKTEXTRACT_REVIEW.md)。未接入 Web/Worker，Task 0.2/1.6 保持未完成。
 
