@@ -3,11 +3,11 @@
 ## 1. 当前快照：先读这一节
 
 - 更新时间：2026-09-15。
-- 核对基线：`91f9bb4`，加本指南同次提交的 100 项评测增量；接手时必须检查实际 Git 状态。
-- 远程仓库：[Holmes522/EnglishTeacherAgent](https://github.com/Holmes522/EnglishTeacherAgent)。上轮 TLS 故障已恢复，`253ee37`、`91f9bb4` 已推送并快进合并到 main。本轮分支为 `codex/wiktextract-evaluation`，同步结果以实际 Git 状态为准；没有关闭 TLS 验证。
+- 核对基线：`e0d94d9`，加本指南同次提交的有限译词契约规格草案；接手时必须检查实际 Git 状态。
+- 远程仓库：[Holmes522/EnglishTeacherAgent](https://github.com/Holmes522/EnglishTeacherAgent)。百项评测 `e0d94d9` 已推送并快进合并 main。本轮文档分支为 `codex/translation-contract-spec`，同步结果以实际 Git 状态为准；没有关闭 TLS 验证。
 - 当前阶段：基础链路 Checkpoint A 已交付，正在做 Task 0.2 词典来源验证，尚未完成 Task 1.6 真实查词。
-- 最近增量：完成固定 100 项 Wiktextract 原始快照采集与离线回放工具；修复缺省翻译字段导致整条词条被拒绝的问题，缺失记录计数跳过，错误类型仍拒绝。
-- 恢复断点：97 个有效输入全数通过读取验证，71 项有中文译词（73.20%）、26 项无中文译词；2 个负向输入为 HTTP 404，另一个 `teh` 有英文词条。正文未提交，复现见 [100 项报告](evaluations/WIKTEXTRACT_COVERAGE.md)。尚未落实应用数据许可展示和 Worker/UI 接入，不增加已完成任务数。
+- 最近增量：新增 [有限译词契约规格](LEXICAL_TRANSLATION_SPEC.md)，明确独立结果类型、三种查询状态、快照/署名元数据及测试标准；状态为 Draft，未实现 schema 或适配器。
+- 恢复断点：等待用户确认该规格后，先实现独立 contracts schema 与测试，不加入 LearningResult、不启用 Worker/UI。百项评测仍为 71/97 译词命中，见 [100 项报告](evaluations/WIKTEXTRACT_COVERAGE.md)。许可清单不是数据授权结论，不增加已完成任务数。
 
 一句话：**异步任务底座可用，真实英语教学能力还未接入；下一步是验证词典数据，而不是重建底座。**
 
@@ -61,6 +61,8 @@ Kaikki 原始 JSONL 已完成 100 探针实测，摘要和限制见 [Wiktextract
 
 按 [现有增量计划](../tasks/plan.md) 的 0.2b/0.2c → 1.6a → 1.6b 推进：
 
+当前优先断点：请先检查用户是否已确认 [有限译词契约规格](LEXICAL_TRANSLATION_SPEC.md)。规格驱动技能要求确认后才编码；本轮只交付草案。批准契约不代表批准具体词库发布；后续许可与数据门槛继续保留。
+
 1. **落实有限数据切片的许可与来源展示。** 100 项结构评测已完成，选择明确范围的原始词条，记录版本/快照、署名、许可链接和修改说明；不要把结构命中报告当作授权证明。
 2. **实现有限译词组查询的独立结果契约。** 用户已接受覆盖缩小；明确显示“译词组、非完整释义”，保留未知/缺失与 UNRESOLVED，不将其硬塞入 `WordAnalysis.zhDefinition`。需要完整义项绑定的部分另补可审计映射，不静默降低原 Task 1.6 验收。
 3. **通过数据门槛后接入 Worker 和结果卡。** 先阅读下节代码；明确有限覆盖，不伪造全部标准义项。需要新增契约字段时同步 schema 生成及测试，再做桌面/移动浏览器 E2E。
@@ -102,6 +104,8 @@ docker compose ps
 容器端口仅回环暴露：PostgreSQL 55432、Redis 56379。Docker 曾有残留 socket 错误，已恢复过；现在是否健康须重新检查，不要默认复发或自动重命名运行时目录。不要清空命名卷。
 
 历史验证证据（**不是每次接手自动有效的结果**）：
+
+本轮仅文档：核对源码字段、生成入口、命令与公开来源；检查 Markdown 格式、链接和差异。不重跑业务测试、构建、集成或浏览器验收，以下 100 条测试等是上一轮证据，不是本轮新增能力。
 
 - 基础链路：71 条 Vitest 单元测试、11 条真实 PostgreSQL/Redis 集成测试、lint/typecheck/build/契约漂移检查通过；人工浏览器验证过刷新、重试、取消和 Worker 重启恢复。
 - FreeDict 增量：24 项独立 PowerShell 断言通过，固定文件重算报告一致；重新运行过 71 条单元测试、lint/typecheck/build/契约漂移检查。这 24 项不包含在 `pnpm test` 中。
