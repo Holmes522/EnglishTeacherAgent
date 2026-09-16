@@ -1,7 +1,7 @@
 # 实施状态
 
 - 更新日期：2026-09-16
-- 独立契约已同步 GitHub main（`b04b4d8`）；本轮为 `codex/offline-translation-adapter`，接手时核对实际 Git HEAD。
+- 离线适配器已同步 GitHub main（`82a0ef2`）；本轮为 `codex/lexical-slice-review`，接手时核对实际 Git HEAD。
 - 新会话接手入口：[AI Agent 研发接手指南](AGENT_HANDOFF.md)。新增指南不改变任务完成度。
 - 产品/架构文档整体仍为 Draft/Proposed；ADR-005 的本地运行方案已获确认，不代表生产部署获批。
 
@@ -19,7 +19,9 @@
 
 ## 当前验证
 
-本轮文档验证：70 个本地链接有效，定向 Prettier 与 `git diff --check` 通过；应用、runtime 及共享契约目录无改动。
+2026-09-16 三词来源复核：新增[评测清单、条款初核及复验报告](evaluations/LEXICAL_SLICE_REVIEW.md)，teacher/apple/bank 新采字节与旧样本摘要一致。补足逐文件下载时间；真实适配器输出均 FOUND，共 14 条译词记录，仍未绑定完整义项。contracts 构建、来源保留、3 份字节篡改拒绝和清单外输入拒绝通过；本地链接、定向 Prettier 与 `git diff --check` 通过。正文仅本地保存，应用未加载清单。仅元数据/文档改动，未重跑全仓门禁、集成、浏览器和依赖审计；历史导入/讨论页/模板依赖未完成逐一追溯，不声称数据源正式获批。
+
+上一轮离线适配器文档验证：70 个本地链接有效，定向 Prettier 与 `git diff --check` 通过。
 
 2026-09-16 离线适配器：新增 25 项合成测试，定向 34 项、全仓 179 项及契约漂移、lint/typecheck/build 通过，独立复审无 Required。实现清单词头/URL/摘要关联、离线字段映射和固定失败码；不包含真实获批清单、Worker/UI 或完整 WordAnalysis。仅添加 contracts workspace 依赖，lockfile 无新第三方版本；使用 `pnpm install --offline --ignore-scripts`，没有下载包或运行安装脚本。未改应用/数据库/队列/UI，未重跑集成、浏览器、真实词库采集和依赖审计。Node 22.20.0 本机结果不代表 Node 24 或生产验收。
 
@@ -73,7 +75,7 @@ Docker Desktop 残留 socket 错误已通过备份运行时目录恢复，未删
 
 ## 下一实施顺序
 
-当前断点：[独立有限译词契约与离线适配器](LEXICAL_TRANSLATION_SPEC.md)已实现；下一步最小真实切片的来源审查与离线复验，不重复建设映射机制。清单格式通过不等于具体数据获批，尚不接入 LearningResult/Worker/UI，Task 0.2/1.6 原验收不变。
+当前断点：[三词真实清单及离线复验](evaluations/LEXICAL_SLICE_REVIEW.md)已交付，仅作评测。teacher 翻译子页需独立署名，下一步补多出处链接展示契约及合成测试，再确认三词本地试用/持久化范围与对应来源遗留项；不重复建设映射机制或百项采集。尚未接入 LearningResult/Worker/UI，Task 0.2/1.6 原验收不变。
 
 2026-09-15：完成 [Wiktextract 100 项采集与离线重算](evaluations/WIKTEXTRACT_COVERAGE.md)（快照采集于 09-14），97 项有效输入全部校验，71 项存在中文译词，26 项无中文译词；读取器按上游可缺省字段跳过并计数不完整翻译记录，未降低错误类型校验。尚未接入应用，不勾选 Task 0.2/1.6 的整体验收。
 

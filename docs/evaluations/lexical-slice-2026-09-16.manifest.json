@@ -1,0 +1,72 @@
+{
+  "schemaVersion": 1,
+  "purpose": "OFFLINE_EVALUATION_ONLY",
+  "snapshots": [
+    {
+      "headword": "teacher",
+      "source": {
+        "provider": "KAIKKI_WIKTEXTRACT",
+        "snapshotSha256": "61039035e0d2377ec0c8165cd00dfb654264b8b33699f1ddca5562c3394558d8",
+        "retrievedAt": "2026-09-16T13:30:21.456Z",
+        "downloadUrl": "https://kaikki.org/dictionary/English/meaning/t/te/teacher.jsonl",
+        "upstreamPageUrl": "https://en.wiktionary.org/wiki/teacher#English",
+        "upstreamRevision": null,
+        "attribution": "English Wiktionary contributors: https://en.wiktionary.org/wiki/teacher and https://en.wiktionary.org/wiki/teacher/translations (each page provides contributor history). Extracted with Wiktextract; supplied by Kaikki.org: https://kaikki.org/dictionary/English/meaning/t/te/teacher.html. No endorsement implied.",
+        "license": {
+          "name": "CC BY-SA 4.0",
+          "url": "https://creativecommons.org/licenses/by-sa/4.0/"
+        },
+        "changes": [
+          "Kaikki supplies Wiktextract extraction of Wiktionary; this inventory selects raw JSONL, not merged post-processed data.",
+          "EnglishTeacherAgent selects English entries and zh/cmn translation groups, renames fields and preserves available qualifiers; no sense-to-gloss binding is asserted.",
+          "Quotations, examples, audio, images and full definitions are excluded from the mapped result. License metadata is a review declaration for the selected text, not blanket clearance of every raw field.",
+          "Offline evaluation only; see LEXICAL_SLICE_REVIEW.md. Application use and redistribution are not approved by this manifest. Exact upstream revisions remain unknown."
+        ]
+      }
+    },
+    {
+      "headword": "apple",
+      "source": {
+        "provider": "KAIKKI_WIKTEXTRACT",
+        "snapshotSha256": "6dd88494395ffa0d4b7a8b321bcbee8d557c58f6d1bd993d297f8a5f568ffd0a",
+        "retrievedAt": "2026-09-16T13:30:22.018Z",
+        "downloadUrl": "https://kaikki.org/dictionary/English/meaning/a/ap/apple.jsonl",
+        "upstreamPageUrl": "https://en.wiktionary.org/wiki/apple#English",
+        "upstreamRevision": null,
+        "attribution": "English Wiktionary contributors: https://en.wiktionary.org/wiki/apple (page provides contributor history). Extracted with Wiktextract; supplied by Kaikki.org: https://kaikki.org/dictionary/English/meaning/a/ap/apple.html. No endorsement implied.",
+        "license": {
+          "name": "CC BY-SA 4.0",
+          "url": "https://creativecommons.org/licenses/by-sa/4.0/"
+        },
+        "changes": [
+          "Kaikki supplies Wiktextract extraction of Wiktionary; this inventory selects raw JSONL, not merged post-processed data.",
+          "EnglishTeacherAgent selects English entries and zh/cmn translation groups, renames fields and preserves available qualifiers; no sense-to-gloss binding is asserted.",
+          "Quotations, examples, audio, images and full definitions are excluded from the mapped result. License metadata is a review declaration for the selected text, not blanket clearance of every raw field.",
+          "Offline evaluation only; see LEXICAL_SLICE_REVIEW.md. Application use and redistribution are not approved by this manifest. Exact upstream revisions remain unknown."
+        ]
+      }
+    },
+    {
+      "headword": "bank",
+      "source": {
+        "provider": "KAIKKI_WIKTEXTRACT",
+        "snapshotSha256": "0962a6ea8bf5e430f8dd3a6cfd32f2999ada81cb2cccd0f0dc6f38b6a2aae6c0",
+        "retrievedAt": "2026-09-16T13:30:22.377Z",
+        "downloadUrl": "https://kaikki.org/dictionary/English/meaning/b/ba/bank.jsonl",
+        "upstreamPageUrl": "https://en.wiktionary.org/wiki/bank#English",
+        "upstreamRevision": null,
+        "attribution": "English Wiktionary contributors: https://en.wiktionary.org/wiki/bank (page provides contributor history). Extracted with Wiktextract; supplied by Kaikki.org: https://kaikki.org/dictionary/English/meaning/b/ba/bank.html. No endorsement implied.",
+        "license": {
+          "name": "CC BY-SA 4.0",
+          "url": "https://creativecommons.org/licenses/by-sa/4.0/"
+        },
+        "changes": [
+          "Kaikki supplies Wiktextract extraction of Wiktionary; this inventory selects raw JSONL, not merged post-processed data.",
+          "EnglishTeacherAgent selects English entries and zh/cmn translation groups, renames fields and preserves available qualifiers; no sense-to-gloss binding is asserted.",
+          "Quotations, examples, audio, images and full definitions are excluded from the mapped result. License metadata is a review declaration for the selected text, not blanket clearance of every raw field.",
+          "Offline evaluation only; see LEXICAL_SLICE_REVIEW.md. Application use and redistribution are not approved by this manifest. Exact upstream revisions remain unknown."
+        ]
+      }
+    }
+  ]
+}
