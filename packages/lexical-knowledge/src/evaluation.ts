@@ -1,12 +1,6 @@
 import { lookupWiktextract, readWiktextract } from "./wiktextract.js";
-
-export function kaikkiSampleUrl(query: string) {
-  const word = query.normalize("NFKC").trim().toLowerCase();
-  if (!/^[\p{L}\p{N}][\p{L}\p{N} '-]{0,199}$/u.test(word))
-    throw new Error("INVALID_QUERY");
-  const chars = [...word];
-  return `https://kaikki.org/dictionary/English/meaning/${encodeURIComponent(chars[0]!)}/${encodeURIComponent(chars.slice(0, 2).join(""))}/${encodeURIComponent(word)}.jsonl`;
-}
+import { kaikkiSampleUrl } from "./sourceUrls.js";
+export { kaikkiSampleUrl } from "./sourceUrls.js";
 
 type DownloadStatus =
   "HTTP_NOT_FOUND" | "HTTP_ERROR" | "FETCH_ERROR" | "SOURCE_TOO_LARGE";

@@ -94,3 +94,30 @@ pnpm build
 官方实现依据：[Zod URL 校验](https://zod.dev/api#urls)、[refinement](https://zod.dev/api#superrefine)、[JSON Schema 生成](https://zod.dev/json-schema)。沿用项目锁定版本，无依赖升级。生成的 JSON Schema 不完整表达状态与 entries 的关系、行号唯一、跨组总量、URL 凭据限制和 UTF-16 refinement；消费端必须使用运行时 schema 校验，不能把单独 JSON Schema 通过当作所有不变量通过。
 
 本轮不重跑真实词库采集、数据库/队列集成、浏览器验收和依赖审计：没有对应行为或依赖变更。Node 22.20.0 本机验证不代表 Node 24 生产验收。下一步是有限快照来源清单与离线结果适配器，先用合成数据验证映射、来源关联和明确失败；真实数据切片批准、Worker/UI 接入仍需各自门槛。原 Task 0.2 / 1.6 保持未完成。
+
+## 7. 离线适配器增量
+
+2026-09-16 已实现，基线 `b04b4d8` 加本文件同次提交的代码。主入口为 [offlineTranslation.ts](../packages/lexical-knowledge/src/offlineTranslation.ts)，[合成测试](../packages/lexical-knowledge/src/offlineTranslation.test.ts)不包含词典正文或授权证明。
+
+用户要求继续下一步，实施 `lookupOfflineTranslation(manifest, query, bytes)`：只接收内存字节，不读文件、不联网、不写应用数据库。清单格式为 `schemaVersion: 1`、`purpose: OFFLINE_EVALUATION_ONLY`、`snapshots`（0–100 项）；每项有规范化 `headword` 和第 4 节 `source`。词头须 NFKC/trim/lowercase 后保持不变，清单内词头与摘要分别唯一；复用既有 Kaikki 单词 URL 构造规则，下载 URL 必须精确匹配，Wiktionary 链接须为对应词头的 `/wiki/<编码词头>#English`。清单是本地人工维护的输入，不是可信发布授权或源修订真实性证明。
+
+查询保留原输入，按 NFKC/trim/lowercase 匹配一份清单快照。未配置词头返回 `SNAPSHOT_NOT_CONFIGURED` 错误；已配置后按清单摘要校验同一份字节。出现其他英文词头则 `SOURCE_HEADWORD_MISMATCH`，不能混用其他词的来源。没有英文记录的已验证快照才可产生 `NOT_FOUND_IN_SNAPSHOT`；有英文词头但无译词仍为 `NO_CHINESE_TRANSLATION`。保留同形 entry、行号、译词分组/限定标签与缺失计数，字段改名后必须再通过共享运行时契约。
+
+错误仅暴露固定代码：`INVALID_QUERY`、`INVALID_SOURCE_MANIFEST`、`SNAPSHOT_NOT_CONFIGURED`、`INVALID_SOURCE_SNAPSHOT`、`SOURCE_HEADWORD_MISMATCH`、`INVALID_TRANSLATION_RESULT`；不回显字节、来源字符串或解析诊断。字节/摘要/读取器失败统一为 `INVALID_SOURCE_SNAPSHOT`，契约超限明确失败，不截断或伪造完整性。
+
+验收：合成测试覆盖三种结果、清单重复/越界/来源 URL 错配、摘要/UTF-8/JSON 异常、跨词混入、UTF-16 超限、字段白名单、不可变输入及零网络调用；全仓门禁通过。仅添加仓库内 contracts 依赖，复用来源与结果 schema，URL 构造抽成共用纯函数供评测器和适配器使用。本轮不添加真实正文或默认获批词库清单；完成的是清单校验和离线映射机制，不是数据源验收。
+
+`parseOfflineSourceManifest(input)` 返回独立解析后的清单；沿用共享 schema 的 [Zod 对象行为](https://zod.dev/api#objects)，未知字段会被剥离，不是生效的配置。尤其 `approved`、`commercialUseAllowed` 等额外字段不会赋予任何权限。每次查询重新校验清单和字节，不依赖可被调用者修改的“已校验”标记；文件读取方仍需在读取前限制体积，本函数不是上传服务。规范 URL 只证明格式关联，不能独立核实声明的许可/来源修订或链路真实性。
+
+安装工作区依赖后，在仓库根目录验证（contracts 由包入口的 dist 提供，必须先构建）：
+
+```powershell
+pnpm --filter @english-teacher/contracts build
+pnpm exec vitest run packages/lexical-knowledge/src/offlineTranslation.test.ts packages/lexical-knowledge/src/evaluation.test.ts
+pnpm lint
+pnpm typecheck
+pnpm test
+pnpm build
+```
+
+本轮定向 34 项、全仓 179 项及契约漂移检查通过，lint/typecheck/build 通过，独立复审无 Required。适配器有 25 项新增测试；先观察到缺实现的失败再完成映射。未修改共享契约/生成文件、Worker、数据库/队列或 UI，未重跑对应集成、浏览器及真实词库采集，未运行新依赖审计（无新第三方版本）。下一步记录最小真实切片的来源审查证据并用保留快照离线复验，再判断能否进入应用接入步骤。

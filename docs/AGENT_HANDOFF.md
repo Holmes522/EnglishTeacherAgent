@@ -2,26 +2,26 @@
 
 ## 1. 当前快照：先读这一节
 
-- 更新时间：2026-09-15。
-- 核对基线：`554eebc`，加本指南同次提交的有限译词契约实现；接手时必须检查实际 Git 状态。
-- 远程仓库：[Holmes522/EnglishTeacherAgent](https://github.com/Holmes522/EnglishTeacherAgent)。规格文档 `554eebc` 已同步 main。本轮分支为 `codex/lexical-translation-contract`，同步结果以实际 Git 状态为准；没有关闭 TLS 验证。
+- 更新时间：2026-09-16。
+- 核对基线：`b04b4d8`，加本指南同次提交的离线适配器增量；接手时必须检查实际 Git 状态。
+- 远程仓库：[Holmes522/EnglishTeacherAgent](https://github.com/Holmes522/EnglishTeacherAgent)。独立契约 `b04b4d8` 已同步 main。本轮分支为 `codex/offline-translation-adapter`，同步结果以实际 Git 状态为准；没有关闭 TLS 验证。
 - 当前阶段：基础链路 Checkpoint A 已交付，正在做 Task 0.2 词典来源验证，尚未完成 Task 1.6 真实查词。
-- 最近增量：用户已确认 [有限译词契约规格](LEXICAL_TRANSLATION_SPEC.md)，完成独立 schema、类型、合成测试与生成 component；不进入 LearningResult，所有旧 API/schema 不变。
-- 恢复断点：契约已完成，不重复实现或再请求确认；下一步有限快照来源清单与离线结果适配器。真实数据许可、来源关联和 Worker/UI 门槛仍未关闭；百项评测仍为 71/97 译词命中，见 [100 项报告](evaluations/WIKTEXTRACT_COVERAGE.md)。不增加整项完成数。
+- 最近增量：完成有限来源清单校验和 `lookupOfflineTranslation(manifest, query, bytes)`：绑定词头/URL/摘要，拒绝跨词混入，映射到共享契约并校验超限；无网络、文件或数据库 I/O。详见 [规格第 7 节](LEXICAL_TRANSLATION_SPEC.md)。
+- 恢复断点：契约与离线适配器机制已完成，不重复搭建；下一步最小真实切片的来源审查和离线复验。尚无默认获批真实清单，声明元数据不等于数据授权；Worker/UI 未接入。百项评测仍为 71/97 译词命中，见 [100 项报告](evaluations/WIKTEXTRACT_COVERAGE.md)，不增加整项完成数。
 
 一句话：**异步任务底座可用，真实英语教学能力还未接入；下一步是验证词典数据，而不是重建底座。**
 
 ## 2. 进度与边界
 
-| 范围               | 当前事实                                                                         | 证据入口                                                                                                 |
-| ------------------ | -------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------- |
-| Task 1.1–1.5       | 已完成脚手架、契约、持久化/队列、API/SSE、输入解析                               | [实施状态](IMPLEMENTATION_STATUS.md)、[任务清单](../tasks/todo.md)                                       |
-| Checkpoint A       | 浏览器提交、逐项进度、部分失败、取消、失败项重试、刷新恢复；仅 fixture           | [本地演示](LOCAL_DEVELOPMENT.md)                                                                         |
-| Task 0.2           | FreeDict 与 Wiktextract 各 100 项结构实测完成；最终来源选择及许可/语义验证未完成 | [FreeDict 报告](evaluations/FREEDICT_REVIEW.md)、[Wiktextract 报告](evaluations/WIKTEXTRACT_COVERAGE.md) |
-| Task 1.6           | 未交付真实查词适配器和结果卡                                                     | [词典结果契约](../packages/contracts/src/results.ts) 只是契约，不是实现                                  |
-| Task 0.3、1.7–1.10 | 真实模型评测、网关、例句、句子评分纠错、词形词族未交付                           | [任务清单](../tasks/todo.md)                                                                             |
-| Task 1.11–1.13     | 批量底座和部分扩展端口已有；真实教学批量、反馈、观测预算及发布验收未完成         | [实施状态](IMPLEMENTATION_STATUS.md)                                                                     |
-| 后续阶段           | 账号/学习闭环、真实 TTS、第二语言、插件运行时未交付                              | [实施计划](../tasks/plan.md)                                                                             |
+| 范围               | 当前事实                                                                         | 证据入口                                                                                                   |
+| ------------------ | -------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- |
+| Task 1.1–1.5       | 已完成脚手架、契约、持久化/队列、API/SSE、输入解析                               | [实施状态](IMPLEMENTATION_STATUS.md)、[任务清单](../tasks/todo.md)                                         |
+| Checkpoint A       | 浏览器提交、逐项进度、部分失败、取消、失败项重试、刷新恢复；仅 fixture           | [本地演示](LOCAL_DEVELOPMENT.md)                                                                           |
+| Task 0.2           | FreeDict 与 Wiktextract 各 100 项结构实测完成；最终来源选择及许可/语义验证未完成 | [FreeDict 报告](evaluations/FREEDICT_REVIEW.md)、[Wiktextract 报告](evaluations/WIKTEXTRACT_COVERAGE.md)   |
+| Task 1.6           | 有限离线映射已交付；获批真实数据、完整义项及结果卡未交付                         | [离线适配器](../packages/lexical-knowledge/src/offlineTranslation.ts)、[规格](LEXICAL_TRANSLATION_SPEC.md) |
+| Task 0.3、1.7–1.10 | 真实模型评测、网关、例句、句子评分纠错、词形词族未交付                           | [任务清单](../tasks/todo.md)                                                                               |
+| Task 1.11–1.13     | 批量底座和部分扩展端口已有；真实教学批量、反馈、观测预算及发布验收未完成         | [实施状态](IMPLEMENTATION_STATUS.md)                                                                       |
+| 后续阶段           | 账号/学习闭环、真实 TTS、第二语言、插件运行时未交付                              | [实施计划](../tasks/plan.md)                                                                               |
 
 按阶段 1 的 13 个任务计，完成 5 个，约 38%；这是任务计数，不是工作量百分比或上线成熟度。不要因为页面能操作就报告 MVP 已完成。
 
@@ -62,10 +62,10 @@ Kaikki 原始 JSONL 已完成 100 探针实测，摘要和限制见 [Wiktextract
 
 按 [现有增量计划](../tasks/plan.md) 的 0.2b/0.2c → 1.6a → 1.6b 推进：
 
-当前优先断点：[有限译词契约](LEXICAL_TRANSLATION_SPEC.md)已确认并实现；下一步对已有读取器增加有限快照的来源清单及离线结果映射。先用合成数据证明状态、字段、摘要/来源关联与超限失败；来源审查通过前不接应用。批准契约不代表批准具体词库发布。
+当前优先断点：[有限译词契约及离线适配器](LEXICAL_TRANSLATION_SPEC.md)已实现。下一步对最小真实切片记录来源与许可证据，再用已保存且摘要一致的字节做离线复验；不重复联网收集百项。清单中的署名/修订/许可文本仍是维护者声明，格式和摘要校验不证明授权或修订真实性。来源审查通过前不接应用。
 
 1. **落实有限数据切片的许可与来源展示。** 100 项结构评测已完成，选择明确范围的原始词条，记录版本/快照、署名、许可链接和修改说明；不要把结构命中报告当作授权证明。
-2. **实现有限译词组查询的离线适配器。** 独立结果契约已完成，保留未知/缺失与 UNRESOLVED，不将其硬塞入 `WordAnalysis.zhDefinition`。新契约采用显式 UTF-16 上限，可能严于原始读取器的码点上限；超限应失败，不截断。需要完整义项绑定的部分另补可审计映射，不静默降低原 Task 1.6 验收。
+2. **用已交付离线适配器复验该切片。** `SNAPSHOT_NOT_CONFIGURED` 不等于未收录；摘要/格式、来源错配与输出超限均明确失败。保留 UNRESOLVED，不塞入 `WordAnalysis.zhDefinition`。契约采用显式 UTF-16 上限，可能严于读取器；不截断。需要完整义项绑定的部分另补可审计映射，不静默降低 Task 1.6 验收。
 3. **通过数据门槛后接入 Worker 和结果卡。** 先阅读下节代码；明确有限覆盖，不伪造全部标准义项。需要新增契约字段时同步 schema 生成及测试，再做桌面/移动浏览器 E2E。
 4. **若数据仍不可用，记录具体阻塞与替代验证。** 不反复重做已完成的 FreeDict 结构评测；不为了展示结果而用模型编造词典事实。需要新的采购、发布决定或材料时说明所需用户行动。
 
@@ -88,6 +88,8 @@ Kaikki 原始 JSONL 已完成 100 探针实测，摘要和限制见 [Wiktextract
 
 当前 `PROCESSOR_MODE` 只接受 `fixture` / `disabled`，未设置时为 disabled。fixture 正常返回 `CLARIFICATION`；精确输入 `fixture:fail` 会持续产生演示失败。`packages/lexical-knowledge` 已有离线读取器，但没有联网 provider 或 `WordAnalysis` 结果适配器。
 
+有限译词查询入口：[offlineTranslation.ts](../packages/lexical-knowledge/src/offlineTranslation.ts)；清单最多 100 项，固定 `OFFLINE_EVALUATION_ONLY`，由调用者提供内存字节。未知清单字段会被剥离，不能用额外 `approved` 字段绕过来源审查；结果仍不在 LearningResult 中。安装依赖后先构建 contracts，再跑独立包测试，见规格命令。
+
 ## 7. 环境与验证
 
 在仓库根目录使用 PowerShell。先检查，不假设旧进程仍在：
@@ -106,7 +108,9 @@ docker compose ps
 
 历史验证证据（**不是每次接手自动有效的结果**）：
 
-本轮契约实现：56 项定向测试、全仓 154 项测试及契约漂移、lint/typecheck/build 通过；旧生成 schema/API 与基线完全一致（仅增加独立 component），独立复审无 Required。生成 JSON Schema 不能表达全部运行时 refinement，需用 Zod schema 校验。未改应用、数据库/队列、UI 或依赖，未重跑集成、浏览器、词库采集和依赖审计。仍在 Node 22.20.0 验证，不代表 Node 24 或生产验收。
+2026-09-16 离线适配器：新增 25 项测试，定向 34 项与全仓 179 项测试、契约漂移、lint/typecheck/build 通过，独立复审无 Required。仅新增 contracts workspace 引用；离线安装禁用脚本，未新增第三方版本或下载包。未改应用/数据库/队列/UI，未重跑集成、浏览器、真实词库采集及依赖审计。仍为 Node 22.20.0，不代表 Node 24 或生产验收。
+
+上一轮契约：56 项定向、全仓 154 项测试及契约漂移、lint/typecheck/build 通过；旧生成 schema/API 与基线完全一致（仅增加独立 component）。生成 JSON Schema 不能表达全部运行时 refinement，须用 Zod schema 校验。
 
 - 基础链路：71 条 Vitest 单元测试、11 条真实 PostgreSQL/Redis 集成测试、lint/typecheck/build/契约漂移检查通过；人工浏览器验证过刷新、重试、取消和 Worker 重启恢复。
 - FreeDict 增量：24 项独立 PowerShell 断言通过，固定文件重算报告一致；重新运行过 71 条单元测试、lint/typecheck/build/契约漂移检查。这 24 项不包含在 `pnpm test` 中。
